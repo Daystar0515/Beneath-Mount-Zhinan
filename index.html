@@ -153,9 +153,13 @@ const SEM_ACTS=[
  ['社交活動','社交＋3、心情＋3',{社交:3,mood:3}],
  ['運動健身','體能＋3、心情＋3',{體能:3,mood:3}],
  ['課餘打工','存款＋12,000、心情−4',{money:12000,mood:-4}],
+ ['房間追劇','窩在房間追劇：心情＋6、體能−2',{mood:6,體能:-2}],
+ ['遊玩電動','打電動放鬆：心情＋6、體能−2',{mood:6,體能:-2}],
+ ['漫遊書海','隨意走進一座圖書館：學業＋2、專業＋2、心情＋3；有機會偶遇愛看書的人',{學業:2,專業:2,mood:3}],
  ['陪伴愛人','心情＋6、親密度＋6、存款−2,000',{mood:6,money:-2000}]];
+const LIBRARIES=['湖畔圖書館','總圖書館','社科資料中心','傳播學院圖書室'];
 const ABROAD_HIDE=['參加社團','課餘打工'];
-const MEET_ACTS=['參加社團','社交活動','運動健身'];
+const MEET_ACTS=['參加社團','社交活動','運動健身','漫遊書海'];
 const LANG_FEE=7000;
 /* 外語組：外國語文學院對應語系的學生才有的語言檢定。門檻＝換算該級需要的外語數值 */
 const FL_TESTS={
@@ -179,7 +183,7 @@ const COURSE_DATA=/*CD_START*/{"req":{"中國文學系":{"req":51,"grad":128,"ro
 const GROUPS={財政學系:['稅務組','公共經濟組','財政管理組'],地政學系:['土地管理組','土地資源規劃組','土地測量與資訊組'],歐洲語文學系:['法文組','德文組','西班牙文組'],東南亞語文學系:['越文組','泰文組','印尼文組'],教育學系:['師資組','非師資組']};
 const GE_RULE={total:28,pe:4};
 const BOOK_GPA=3.85;  // 4.0 制，學期 GPA 達此標準視為拿到書卷獎
-const EX={study:9,pass:43,recSem:[0.95,1.0],recYear:[0.66,0.88],waive:0.95,courseOff:-4.6};  // 平衡參數（見規格書平衡模擬）
+const EX={study:9,pass:43,recSem:[0.95,1.0],recYear:[0.62,0.86],waive:0.95,courseOff:-3.5};  // 平衡參數（見規格書平衡模擬）
 const WIN_ACTS={'回家過年':{mood:15,money:6000},'陪伴愛人':{mood:10,money:-3000},'營隊幹部':{社交:4,才藝:1,mood:5,money:-2000},'打工':{money:15000,專業:2,mood:-2},'出國旅行':{money:-15000,mood:20,外語:2},'自主進修':{學業:3,外語:2,mood:-2}};
 const SUM_ACTS={'實習':{},'陪伴愛人':{mood:10,money:-5000},'暑修':{學業:2,mood:-3},'打工':{money:20000,專業:2,mood:-3},'營隊':{社交:4,才藝:2,mood:3},'語言課':{外語:5,money:-10000},'旅行':{money:-20000,mood:15,外語:2}};
 
@@ -419,27 +423,64 @@ const EVENTS=[
  ['按課本照講','學業',11,'平穩完成。',{學業:2},'講得太快，孩子聽不懂。',{mood:-2}],
  ['先觀課學習',null,0,'記下了老師的班級經營技巧。',{專業:1}]]},
 /* 感情線（只寫到牽手、約會、告白層級） */
-{id:'meet',k:['sem'],w:()=>MEET_ACTS.some(a=>(S.sub.acts||[]).includes(a))?14:4,c:()=>!S.npc.cr&&S.pi>0,pre:()=>newCrush(),title:'心動',text:'{meetPlace}，{cr}跟你聊了起來，笑起來的樣子讓你多看了好幾眼。',o:[
- ['主動要聯絡方式','社交',12,'你們聊了二十分鐘，交換了聯絡方式。',{rel:{cr:15},mood:4,flag:'曖昧'},'你講話結巴，{pr}笑了笑先離開了。',{rel:{cr:5},flag:'曖昧'}],
- ['約{pr}下次一起吃飯','社交',14,'{pr}爽快地答應了。',{rel:{cr:18},mood:5,flag:'曖昧'},'{pr}說最近有點忙，下次吧。',{rel:{cr:4},flag:'曖昧'}],
- ['點點頭就離開',null,0,'你回頭看了一眼，{pr}也正好回頭。',{rel:{cr:6},flag:'曖昧'}]]},
-{id:'date',k:['sem'],w:7,c:()=>S.flags.includes('曖昧')&&!S.flags.includes('交往')&&S.rel.cr>=8,title:'週末邀約',text:'{cr}傳訊息問你週末要不要一起上貓空喝茶。',o:[
+{id:'meet',k:['sem'],rep:1,w:()=>MEET_ACTS.some(a=>(S.sub.acts||[]).includes(a))?22:8,c:()=>!S.npc.cr&&!S.flags.includes('交往')&&S.pi>0,pre:()=>newCrush(meetSrc()),title:'心動',text:'{meetPlace}，{cr}跟你聊了起來。{traitIntro}',o:()=>{const L=traitInfo().likes;return[
+ ['主動要聯絡方式','社交',12,'你們聊了二十分鐘，交換了聯絡方式。',{rel:{cr:15},mood:4,flag:'曖昧'},'你講話結巴，{pr}笑了笑，還是把聯絡方式給了你。',{rel:{cr:6},flag:'曖昧'}],
+ [{體能:'約{pr}下次一起去運動',才藝:'聊起最近看的展覽和電影',學業:'聊起剛剛那本書的作者',社交:'約{pr}下次一起吃飯'}[L],L,11,'{pr}眼睛一亮：「你也喜歡這個？」你們約好了下次見面。',{rel:{cr:18},mood:5,flag:'曖昧'},'話題沒接上，但{pr}說下次可以再聊。',{rel:{cr:5},flag:'曖昧'}],
+ ['點點頭就離開',null,0,'你回頭看了一眼，{pr}也正好回頭。',{rel:{cr:6},flag:'曖昧'}]];}},
+{id:'tdate',k:['sem'],rep:1,w:8,c:()=>S.npc.cr&&(S.flags.includes('交往')||(S.flags.includes('曖昧')&&S.rel.cr>=8)),title:'約會提案',text:'{cr}（{trait}）傳訊息問你這週末有沒有空。',o:()=>traitInfo().o.concat([['這週有事，改天吧',null,0,'{cr}說沒關係，下次再約。',{rel:{cr:-2},mood:1}]])},
+{id:'crush_night',k:['sem'],rep:1,w:6,c:()=>S.flags.includes('曖昧')&&!S.flags.includes('交往')&&S.npc.cr,title:'深夜的訊息',text:'凌晨一點，{cr}還在跟你傳訊息，話題從期中考一路聊到小時候的夢想。',o:[
+ ['陪{pr}聊到天亮',null,0,'天快亮時，你們同時傳了一句「晚安」。',{rel:{cr:10},mood:4,體能:-1}],
+ ['分享一首你很喜歡的歌','才藝',11,'{pr}說這首歌之後會一直單曲循環。',{rel:{cr:9},才藝:1},'{pr}回了一個「嗯嗯」就睡著了，隔天跟你道歉了好幾次。',{rel:{cr:4}}],
+ ['提醒{pr}早點睡',null,0,'{pr}回了一個害羞的貼圖。',{rel:{cr:5},mood:2}]]},
+{id:'crush_study',k:['sem'],rep:1,w:6,c:()=>S.flags.includes('曖昧')&&!S.flags.includes('交往')&&S.npc.cr,title:'一起讀書',text:'期中考前，{cr}問你要不要一起去總圖書館讀書。',o:[
+ ['教{pr}看不懂的章節','學業',12,'{pr}說你講得比老師還清楚。',{rel:{cr:9},學業:1},'你自己也講到卡住，兩個人一起笑場。',{rel:{cr:4}}],
+ ['讀累了一起去買宵夜',null,0,'深夜的便利商店，你們聊到忘了時間。',{rel:{cr:6},mood:3,money:-100}],
+ ['各讀各的，偶爾傳紙條',null,0,'紙條上畫滿了可愛的塗鴉。',{rel:{cr:5},學業:1}]]},
+{id:'crush_rain',k:['sem'],rep:1,w:5,c:()=>S.flags.includes('曖昧')&&!S.flags.includes('交往')&&S.npc.cr,title:'突然的大雨',text:'下課時突然下起大雨，{cr}站在研究大樓門口，手上沒有傘。',o:[
+ ['把傘撐過去',null,0,'你半邊肩膀都濕了，{pr}一路上偷看了你好幾次。',{rel:{cr:8},mood:3}],
+ ['衝去買一把傘給{pr}','體能',11,'你喘著氣把傘遞過去，{pr}愣了一下才笑出來。',{rel:{cr:10},體能:1,money:-150},'跑到一半滑了一跤，{pr}笑著把你扶起來。',{rel:{cr:6},money:-150}],
+ ['陪{pr}等雨停',null,0,'雨停的時候，天邊掛著一道彩虹。',{rel:{cr:6},mood:4}]]},
+{id:'crush_rival',k:['sem'],rep:1,w:5,c:()=>S.flags.includes('曖昧')&&!S.flags.includes('交往')&&S.npc.cr&&S.rel.cr>=15,title:'有人也在約{pr}',text:'你聽說隔壁系有人也在約{cr}吃飯。',o:[
+ ['主動約{pr}看電影','社交',13,'{pr}笑著說：「我還在想你什麼時候會開口。」',{rel:{cr:10},mood:4,money:-500},'{pr}那天剛好有約了，但說下週可以。',{rel:{cr:3},mood:-2}],
+ ['準備一份小禮物',null,0,'{pr}把禮物收進包包時，嘴角一直上揚。',{rel:{cr:7},money:-400}],
+ ['相信緣分，順其自然',null,0,'你們的距離沒有變近，也沒有變遠。',{rel:{cr:1}}]]},
+{id:'love_bday',k:['sem'],rep:1,w:4,c:()=>S.flags.includes('交往'),title:'{pr}的生日',text:'{cr}的生日快到了，你想給{pr}一個難忘的驚喜。',o:[
+ ['親手做卡片和蛋糕','才藝',12,'{pr}吹蠟燭時眼眶紅了。{touch}',{rel:{cr:10},才藝:1,mood:5,money:-300},'蛋糕塌了一半，但{pr}說這是吃過最好吃的。{touch}',{rel:{cr:6},money:-300}],
+ ['訂一間{pr}一直想去的餐廳',null,0,'燭光晚餐很浪漫。{touch}',{rel:{cr:7},mood:5,money:-2000}],
+ ['找朋友一起辦驚喜派對','社交',12,'{pr}推開門的那一刻尖叫出聲。{touch}',{rel:{cr:9},社交:2,mood:6,money:-800},'驚喜提早被發現了，但大家還是玩得很開心。',{rel:{cr:5},社交:1,money:-800}]]},
+{id:'love_trip',k:['sem'],rep:1,w:3,c:()=>S.flags.includes('交往'),title:'連假小旅行',text:'連假快到了，{cr}提議來一趟小旅行。',o:[
+ ['去宜蘭泡溫泉',null,0,'泡完湯吃了一整桌海鮮。{touch}',{rel:{cr:9},mood:8,money:-4000}],
+ ['騎機車環北海岸','體能',11,'海風很大，你們一路唱著歌。{touch}',{rel:{cr:8},mood:7,體能:1,money:-1000},'騎到一半下雨，躲在便利商店吃關東煮也很開心。',{rel:{cr:5},mood:3,money:-1000}],
+ ['在台北當一日觀光客',null,0,'原來住了這麼久的城市，還有這麼多沒去過的小店。{touch}',{rel:{cr:6},mood:5,money:-300}]]},
+{id:'love_cook',k:['sem'],rep:1,w:3,c:()=>S.flags.includes('交往'),title:'一起下廚',text:'{cr}說想試著兩個人自己煮一頓飯。',o:[
+ ['你掌廚，{pr}當助手','才藝',11,'意外地好吃，兩個人吃得盤底朝天。{touch}',{rel:{cr:7},才藝:1,mood:4,money:-300},'煮到一半燒焦了，最後叫了外送，還是笑得很開心。',{rel:{cr:4},money:-300}],
+ ['一起看食譜慢慢做',null,0,'花了兩個小時做出三道菜。{touch}',{rel:{cr:6},mood:4,money:-300}],
+ ['乾脆去吃學校附近的小吃',null,0,'那間滷味還是一樣好吃。',{rel:{cr:4},mood:3,money:-200}]]},
+{id:'love_family',k:['sem'],once:1,w:3,c:()=>S.flags.includes('交往')&&S.rel.cr>=75,title:'見家長',text:'{cr}說爸媽想見見你。',o:[
+ ['帶伴手禮登門拜訪','社交',12,'{cr}的媽媽一直幫你夾菜。',{rel:{cr:8},社交:2,mood:5,money:-800},'緊張到打翻了茶，大家笑成一團，氣氛反而輕鬆了。',{rel:{cr:5},money:-800}],
+ ['先約在餐廳吃頓飯',null,0,'{cr}的爸爸說你很有禮貌。',{rel:{cr:6},mood:3,money:-1500}],
+ ['說還沒準備好，再等等',null,0,'{cr}說沒關係，等你準備好。',{rel:{cr:1}}]]},
+{id:'love_future',k:['sem'],once:1,y:[3,4,5],w:3,c:()=>S.flags.includes('交往'),title:'聊聊未來',text:'散步時，{cr}問你畢業後想做什麼。',o:[
+ ['認真說出你的計畫',null,0,'{pr}說不管你去哪裡，都會支持你。{touch}',{rel:{cr:7},mood:4}],
+ ['一起規劃兩個人的未來','社交',12,'你們在筆記本上寫下想一起去的地方。{touch}',{rel:{cr:9},mood:5},'聊著聊著發現彼此想法不太一樣，但你們約好慢慢磨合。',{rel:{cr:3}}],
+ ['先好好享受現在',null,0,'{pr}靠在你的肩膀上說：「也是。」',{rel:{cr:5},mood:3}]]},
+{id:'date',k:['sem'],rep:1,w:10,c:()=>S.flags.includes('曖昧')&&!S.flags.includes('交往')&&S.rel.cr>=8,title:'週末邀約',text:'{cr}傳訊息問你週末要不要一起上貓空喝茶。',o:[
  ['答應','社交',11,'纜車上看夕陽，話題一直沒停過。',{rel:{cr:12},mood:6,money:-600},'聊著聊著冷場了，但還算愉快。',{rel:{cr:4},money:-600}],
  ['找朋友一起去',null,0,'一群人玩得很開心。',{rel:{cr:4},社交:1}],
  ['說最近太忙',null,0,'{cr}回了一個「好喔」。',{rel:{cr:-6}}]]},
-{id:'confess',k:['sem'],w:6,c:()=>S.flags.includes('曖昧')&&!S.flags.includes('交往')&&S.rel.cr>=18,title:'告白',text:'和{cr}走在景美溪河堤上，晚風很舒服，你覺得是時候說出心裡話了。',o:[
- ['直接告白','社交',13,'{cr}沉默了一下，然後輕輕牽起你的手。你們在一起了。',{dateStart:1,mood:12},'{cr}說想再當一陣子朋友。',{mood:-10,rel:{cr:-10}}],
- ['寫一封信給{pr}','才藝',13,'隔天{pr}回了一封更長的信，最後一行寫著「好」。你們在一起了。',{dateStart:1,mood:12},'信寄出後，{pr}一直沒有回。',{mood:-8,rel:{cr:-6}}],
+{id:'confess',k:['sem'],rep:1,w:9,c:()=>S.flags.includes('曖昧')&&!S.flags.includes('交往')&&S.rel.cr>=18,title:'告白',text:'和{cr}走在景美溪河堤上，晚風很舒服，你覺得是時候說出心裡話了。',o:[
+ ['直接告白','社交',13,'{cr}沉默了一下，然後輕輕牽起你的手。你們在一起了。',{dateStart:1,mood:12},'{cr}說想再當一陣子朋友。你們慢慢回到普通朋友的距離，也許下一段緣分會在別的地方出現。',{mood:-8,crushEnd:1}],
+ ['寫一封信給{pr}','才藝',13,'隔天{pr}回了一封更長的信，最後一行寫著「好」。你們在一起了。',{dateStart:1,mood:12},'信寄出後，{pr}隔了幾天才回：「謝謝你，但我們還是當朋友好嗎？」你把那封回信收進抽屜，決定往前走。',{mood:-8,crushEnd:1}],
  ['再等等',null,0,'這段曖昧又延長了一陣子。',{rel:{cr:3}}]]},
-{id:'quarrel',k:['sem'],w:2,c:()=>S.flags.includes('交往'),title:'小爭執',text:'{cr}覺得你最近都在忙，很少有時間陪{pr}。',o:[
+{id:'quarrel',k:['sem'],rep:1,w:2,c:()=>S.flags.includes('交往'),title:'小爭執',text:'{cr}覺得你最近都在忙，很少有時間陪{pr}。',o:[
  ['好好聊聊','社交',12,'把話說開之後，兩人更了解彼此。',{rel:{cr:6},mood:2},'越說越僵，各自冷靜了幾天。',{rel:{cr:-8},mood:-5}],
  ['安排一次約會',null,0,'一起去看了期待很久的電影。{touch}',{rel:{cr:5},mood:5,money:-1000}],
  ['先冷處理',null,0,'兩人都不說話，氣氛很悶。',{rel:{cr:-10},mood:-4}]]},
-{id:'anniv',k:['sem'],w:2,c:()=>S.flags.includes('交往'),title:'交往紀念日',text:'交往紀念日，{cr}送你一張手寫卡片。',o:[
+{id:'anniv',k:['sem'],rep:1,w:3,c:()=>S.flags.includes('交往'),title:'交往紀念日',text:'交往紀念日，{cr}送你一張手寫卡片。',o:[
  ['回送手作禮物','才藝',11,'{pr}收到時眼眶有點紅。{touch}',{rel:{cr:8},mood:6,才藝:1},'手作做到一半就放棄，改買了花。{pr}還是很開心。',{rel:{cr:4},money:-500}],
  ['帶{pr}上山看夜景','體能',11,'兩人在指南山上聊到很晚。{touch}',{rel:{cr:8},mood:8},'爬到一半下起雨，兩人笑著跑下山。',{rel:{cr:5},mood:4}],
  ['一起吃頓晚餐',null,0,'簡單卻很溫暖的一晚。{touch}',{rel:{cr:5},mood:5,money:-800}]]},
-{id:'weekend',k:['sem'],w:2,c:()=>S.flags.includes('交往'),title:'兩個人的週末',text:'難得沒有報告要趕，{cr}問你週末想去哪裡。',o:[
+{id:'weekend',k:['sem'],rep:1,w:3,c:()=>S.flags.includes('交往'),title:'兩個人的週末',text:'難得沒有報告要趕，{cr}問你週末想去哪裡。',o:[
  ['去河堤騎腳踏車','體能',10,'夕陽把景美溪染成金色。{touch}',{rel:{cr:6},體能:1,mood:5},'騎到一半落鏈，兩個人推著車走回來，一路笑個不停。',{rel:{cr:4},mood:3}],
  ['窩在咖啡店各自讀書',null,0,'偶爾抬頭對看一眼，就覺得很安心。',{rel:{cr:4},學業:1,mood:3}],
  ['去看一場展覽','才藝',11,'{pr}聽你講解畫作聽得很認真。{touch}',{rel:{cr:6},才藝:1,mood:4},'你講錯畫家名字，被{pr}笑了一整天。',{rel:{cr:3},mood:2}]]},
@@ -596,6 +637,7 @@ function applyFx(fx,scale=1){
   else if(k==='rel'){for(const r in v){if(r==='cr'&&!S.npc.cr)continue;const dv=Math.round(v[r]*scale);S.rel[r]=clamp((S.rel[r]||0)+dv,0,100);out.push([npcName(r)+' 好感',dv]);}}
   else if(k==='dateStart'){addFlag('交往');S.rel.cr=60;S.loveMiss=0;out.push(['親密度 60',0]);}
   else if(k==='flag'){addFlag(v);}
+  else if(k==='crushEnd'){S.sub.crushEnd=true;}
   else if(k==='club'){if(!S.club){const [c,n]=v.split('|');S.club={cat:c,name:n};out.push(['加入'+n,0]);}}
  }
  return out;
@@ -607,9 +649,44 @@ function fxCost(fx){return fx&&fx.money<0?-fx.money:0;}
 function optCost(o){return o[8]!=null?o[8]:Math.max(fxCost(o[4]),fxCost(o[6]));}
 function addFlag(f){if(!S.flags.includes(f))S.flags.push(f);}
 function npcName(k){return S.npc[k]||'';}
-function touchLine(){const I=S.rel.cr||0;return I>=90?'那天晚上你沒有回宿舍，有些事只屬於你們兩個人。':I>=80?'道別前，{cr}在你唇上輕輕吻了一下。':I>=70?'分開前，{cr}給了你一個長長的擁抱。':'回去的路上，你們一直牽著手。';}
-const MEET_PLACE={參加社團:'社課結束後收拾器材時',社交活動:'在朋友的生日聚會上',運動健身:'在體育館的重訓區'};
-function fill(t){return t.replace(/\{touch\}/g,()=>touchLine()).replace(/\{(\w+)\}/g,(m,k)=>k==='pr'?S.npc.pr||'他':k==='city'?(S.ex.city||'海外'):k==='name'?S.name:k==='meetPlace'?(MEET_PLACE[(S.sub.acts||[]).find(a=>MEET_PLACE[a])]||'在湖畔圖書館借書時'):(S.npc[k]||'某人'));}
+function touchLine(){const I=S.rel.cr||0;if(!S.flags.includes('交往'))return '';return I>=90?'那天晚上你沒有回宿舍，有些事只屬於你們兩個人。':I>=80?'道別前，{cr}在你唇上輕輕吻了一下。':I>=70?'分開前，{cr}給了你一個長長的擁抱。':'回去的路上，你們一直牽著手。';}
+const MEET_PLACE={參加社團:'社課結束後收拾器材時',社交活動:'在朋友的生日聚會上',運動健身:'在體育館的重訓區',漫遊書海:'在圖書館的書架之間，你們同時伸手拿了同一本書',dept:'在系上的活動裡',none:'在湖畔圖書館借書時'};
+/* 曖昧對象的特質：依認識的地方決定。likes＝對方欣賞的能力（約會時用這項判定比較容易成功） */
+const TRAITS={
+ sporty:{label:'外向、陽光',likes:'體能',intro:'{pr}笑聲爽朗、說話直接，聊沒幾句就問你平常有沒有在運動。',o:[
+  ['一起去河堤夜跑','體能',10,'跑完兩個人坐在河堤邊喘氣，{pr}說好久沒這麼痛快了。{touch}',{rel:{cr:10},體能:2,mood:5},'你跑到一半就跟不上，{pr}笑著陪你走完。',{rel:{cr:5},體能:1}],
+  ['陪{pr}去看一場球賽','社交',11,'你們跟著全場一起歡呼，{pr}激動到抱住你。{touch}',{rel:{cr:9},社交:1,mood:6,money:-500},'看不太懂規則，但{pr}耐心地講給你聽。',{rel:{cr:5},money:-500}]]},
+ art:{label:'感性、浪漫',likes:'才藝',intro:'{pr}說話慢慢的，總會注意到別人沒發現的小細節，手機裡存滿自己拍的照片。',o:[
+  ['一起去看一場展覽','才藝',10,'你們在同一幅畫前站了很久，{pr}說很少遇到聊得來的人。{touch}',{rel:{cr:10},才藝:2,mood:5,money:-300},'你看得一頭霧水，{pr}卻覺得你的反應很可愛。',{rel:{cr:5},money:-300}],
+  ['去看{pr}的成果發表','社交',11,'表演結束後，{pr}第一個找的人是你。{touch}',{rel:{cr:9},社交:1,mood:5},'你遲到了半首，但{pr}還是很開心你有來。',{rel:{cr:5}}]]},
+ academic:{label:'理性、愛思考',likes:'學業',intro:'{pr}聊起喜歡的議題就停不下來，還會認真反問你的看法。',o:[
+  ['一起去聽一場講座再聊心得','學業',10,'你們從演講廳一路辯論到宵夜攤，{pr}說你的觀點很有意思。{touch}',{rel:{cr:10},學業:2,mood:4},'你的論點被{pr}拆得七零八落，兩個人卻笑得很開心。',{rel:{cr:5},學業:1}],
+  ['在書店待一整個下午','學業',11,'{pr}把自己畫滿重點的書借給你。{touch}',{rel:{cr:9},學業:1,mood:4,money:-400},'你在旁邊打瞌睡，{pr}偷拍了你的睡臉。',{rel:{cr:5},money:-400}]]},
+ service:{label:'溫柔、體貼',likes:'社交',intro:'{pr}記得每個人的名字，說話很溫柔，看到有人落單就會主動走過去。',o:[
+  ['一起去當一天志工','社交',10,'看{pr}陪小朋友玩的樣子，你覺得心裡暖暖的。{touch}',{rel:{cr:10},社交:2,mood:6},'你笨手笨腳地打翻了一箱物資，{pr}笑著陪你收拾。',{rel:{cr:5},社交:1}],
+  ['幫{pr}搬活動物資','體能',11,'搬完東西，{pr}請你喝了一杯溫熱的奶茶。{touch}',{rel:{cr:9},體能:1,mood:4},'搬到一半腰痠了，換{pr}幫你貼痠痛貼布。',{rel:{cr:6}}]]},
+ social:{label:'熱情、健談',likes:'社交',intro:'{pr}是聚會的中心，卻特地走過來找站在角落的你聊天。',o:[
+  ['揪一群朋友去唱歌','社交',10,'合唱情歌時，大家起鬨要你們站到中間。{touch}',{rel:{cr:10},社交:2,mood:6,money:-500},'你唱破音了，{pr}卻把那段錄下來當鈴聲。',{rel:{cr:5},money:-500}],
+  ['兩個人去夜市邊吃邊逛',null,0,'{pr}一路介紹哪攤最好吃，你們吃到走不動。{touch}',{rel:{cr:8},mood:5,money:-400}]]},
+ bookish:{label:'文靜、內斂',likes:'學業',intro:'{pr}抱著一疊書，說話輕聲細語，聊到喜歡的作家時眼睛會亮起來。',o:[
+  ['交換彼此最喜歡的一本書','學業',10,'一週後，{pr}把書還你時，裡面夾了一張寫滿心得的書籤。{touch}',{rel:{cr:10},學業:1,才藝:1,mood:5},'你還沒看完，{pr}說沒關係，慢慢看。',{rel:{cr:5},學業:1}],
+  ['在湖畔圖書館並肩讀到閉館',null,0,'閉館音樂響起時，{pr}小聲說：「明天也一起來吧。」{touch}',{rel:{cr:8},學業:2,mood:4}]]},
+ dept:{label:'隨和、開朗',likes:'社交',intro:'{pr}是系上的同學，大家都說跟{pr}相處起來很輕鬆。',o:[
+  ['一起組讀書會準備期中','學業',10,'你們的筆記被全班借去影印。{touch}',{rel:{cr:9},學業:2,mood:4},'讀書會變成聊天會，但很快樂。',{rel:{cr:5},mood:3}],
+  ['期末一起熬夜趕報告','社交',11,'交出報告的那一刻，你們在系館門口擊掌。{touch}',{rel:{cr:10},社交:1,mood:5},'熬到凌晨還是沒做完，{pr}買了宵夜幫你打氣。',{rel:{cr:6},mood:-1}]]},
+ gentle:{label:'溫和、細心',likes:'社交',intro:'{pr}說話不疾不徐，笑起來很溫暖。',o:[
+  ['上貓空喝茶看夜景',null,0,'纜車上看夕陽，話題一直沒停過。{touch}',{rel:{cr:9},mood:6,money:-600}],
+  ['在河堤散步聊天','社交',10,'你們從小時候的糗事一路聊到未來想去的地方。{touch}',{rel:{cr:9},社交:1,mood:4},'散步散到一半下起雨，兩個人笑著跑回去。',{rel:{cr:5},mood:2}]]}};
+const CLUB_TRAIT={體適能社團:'sporty',藝術性社團:'art',學術性社團:'academic',服務性社團:'service',聯誼性社團:'social'};
+function traitFor(src){if(src==='參加社團'&&S.club)return{k:CLUB_TRAIT[S.club.cat]||'social',club:S.club.name};
+ return{k:{運動健身:'sporty',社交活動:'social',漫遊書海:'bookish',dept:'dept'}[src]||'gentle'};}
+function traitInfo(){return TRAITS[(S.crTrait||{}).k]||TRAITS.gentle;}
+function traitIntro(){const t=S.crTrait||{};return (t.club?`{pr}和你同樣是${t.club}的社員。`:'')+traitInfo().intro;}
+// 決定這次在哪裡遇見（也決定對方的特質）
+function meetSrc(){if(S.sub.meetSrc)return S.sub.meetSrc;const a=MEET_ACTS.filter(x=>(S.sub.acts||[]).includes(x));S.sub.meetSrc=a.length?pick(a):'none';return S.sub.meetSrc;}
+function endCrush(){if(!S.npc.cr)return;S.pastCrush=(S.pastCrush||[]).concat(S.npc.cr);S.log.push(`${phaseLabel(cur())}｜和${S.npc.cr}回到朋友關係`);S.npc.cr=null;S.rel.cr=0;S.crTrait=null;S.flags=S.flags.filter(f=>f!=='曖昧'&&f!=='交往');}
+function evOpts(ev){return typeof ev.o==='function'?ev.o():ev.o;}
+function fill(t){return t.replace(/\{traitIntro\}/g,()=>traitIntro()).replace(/\{touch\}/g,()=>touchLine()).replace(/\{(\w+)\}/g,(m,k)=>k==='trait'?traitInfo().label:k==='pr'?S.npc.pr||'他':k==='city'?(S.ex.city||'海外'):k==='name'?S.name:k==='meetPlace'?(S.sub.meetSrc==='漫遊書海'&&S.sub.lib?`在${S.sub.lib}的書架之間，你們同時伸手拿了同一本書`:MEET_PLACE[S.sub.meetSrc]||MEET_PLACE.none):(S.npc[k]||'某人'));}
 function fxHtml(list){return `<div class="fx">${list.map(([k,v])=>`<span class="${v<0?'neg':''}">${esc(k)}${v===0?'':' '+(v>0?'+':'')+(Math.abs(v)>=1000?v.toLocaleString():v)}</span>`).join('')}</div>`;}
 function check(stat,dc){const roll=d(20);if(roll===20)return{t:2,roll};if(roll===1)return{t:-2,roll};
  const bonus=(stat==='社交'&&S.dept==='心理學系')||(S.dept==='哲學系'&&stat==='學業')?2:0;
@@ -618,13 +695,13 @@ const TIER_NAME={2:'大成功',1:'成功','-1':'失敗','-2':'大失敗'};
 // 系烤、宿營這類團體活動：判定後有機會交到新朋友，或遇到曖昧對象
 function mixer(stat,dc,okText,okFx,ngText,ngFx){return ()=>{const res=stat?check(stat,dc):null;const tier=res?res.t:1,ok=tier>0;
  let text=ok?okText:ngText;const fx={...(ok?okFx:ngFx)};const extra=[];
- const canCrush=!S.npc.cr&&!S.flags.includes('交往');const pC=!stat?.18:tier===2?.45:ok?.3:.1,pF=ok?.75:.35;
- if(canCrush&&rand()<pC){newCrush();addFlag('曖昧');S.rel.cr=12;text+='{cr}剛好坐在你旁邊，你們聊得特別投機，離開前互加了好友。';extra.push([`認識了${S.npc.cr}・好感`,12]);}
+ const canCrush=!S.npc.cr&&!S.flags.includes('交往');const pC=!stat?.1:tier===2?.3:ok?.18:.05,pF=ok?.75:.35;
+ if(canCrush&&rand()<pC){newCrush('dept');addFlag('曖昧');S.rel.cr=12;text+='{cr}剛好坐在你旁邊，你們聊得特別投機，離開前互加了好友。';extra.push([`認識了${S.npc.cr}・好感`,12]);}
  else if(rand()<pF){const f=newSurname();S.friends=(S.friends||[]).concat(f);text+=`你還認識了新朋友${f}。`;extra.push([`新朋友 ${f}`,0]);}
  return{tier,res,text,fx,extra};};}
 function freshSurname(){const used=Object.values(S.npc).concat(S.roomies||[],S.friends||[]).filter(x=>typeof x==='string').map(n=>n.replace(/^小|哥$|姐$|教授$/g,''));let s,g=0;do{s=pick(SURNAMES);g++;}while(used.includes(s)&&g<100);return s;}
 function newSurname(){return '小'+freshSurname();}
-function newCrush(){S.npc.cr=newSurname();S.rel.cr=0;S.npc.pr=S.pref==='男生'?'他':S.pref==='女生'?'她':(rand()<.5?'他':'她');S.flags=S.flags.filter(f=>f!=='曖昧'&&f!=='交往');}
+function newCrush(src){S.npc.cr=newSurname();S.rel.cr=0;S.crTrait=traitFor(src||'none');S.npc.pr=S.pref==='男生'?'他':S.pref==='女生'?'她':(rand()<.5?'他':'她');S.flags=S.flags.filter(f=>f!=='曖昧'&&f!=='交往');}
 
 /* ================= 課程系統 =================
    開學時依系組排出四年修課路徑：必修、群修照科目表的建議學期，通識與體育依全校規定。
@@ -797,7 +874,7 @@ function go(){
  if(!st){nextPhase();return;}
  S.step=st;S.sub.ev=null;S.sub.evRes=null;
  if(st==='ev')prepareEvent();
- else if(st.startsWith('fev:')){S.step='ev';S.sub.ev=st.slice(4);S.sub.used=(S.sub.used||[]).concat(S.sub.ev);}
+ else if(st.startsWith('fev:')){S.step='ev';S.sub.ev=st.slice(4);S.sub.used=(S.sub.used||[]).concat(S.sub.ev);const fe=EVENTS.find(e=>e.id===S.sub.ev);if(fe.pre)fe.pre();}
  else if(st==='mid')doMid();
  else if(st==='final')doFinal(false);
  else if(st==='abFinal'){S.step='final';doFinal(true);}
@@ -808,7 +885,7 @@ function go(){
 function prepareEvent(){
  const p=cur(),kind=p.kind,acts=S.sub.acts||[];
  const ok=e=>e.k.includes(kind)&&(!e.y||e.y.includes(p.y))&&(!e.t||e.t===p.t)&&(!e.a||e.a.some(a=>acts.includes(a)))&&(!e.c||e.c());
- let pool=EVENTS.filter(e=>ok(e)&&!S.seen.includes(e.id)&&!(S.sub.used||[]).includes(e.id));
+ let pool=EVENTS.filter(e=>ok(e)&&(e.rep||!S.seen.includes(e.id))&&!(S.sub.used||[]).includes(e.id)&&!(e.once&&S.seen.includes(e.id)));
  if(!pool.length)pool=EVENTS.filter(e=>ok(e)&&!e.once&&!(S.sub.used||[]).includes(e.id));
  if(!pool.length)pool=EVENTS.filter(e=>e.k.includes(kind)&&!e.c&&!e.a&&!e.once);
  const W=e=>typeof e.w==='function'?e.w():(e.w||1);const tw=pool.reduce((a,e)=>a+W(e),0);let r=rand()*tw,ev=pool[0];
@@ -817,7 +894,7 @@ function prepareEvent(){
  S.sub.ev=ev.id;S.sub.used=(S.sub.used||[]).concat(ev.id);
 }
 function chooseOption(i){
- const ev=EVENTS.find(e=>e.id===S.sub.ev),o=ev.o[i];
+ const ev=EVENTS.find(e=>e.id===S.sub.ev),o=evOpts(ev)[i];
  if(S.sub.evRes)return;
  if(i===-1){S.sub.evRes={i:-1,tier:1,check:null,text:'存款不夠，只好錯過這次。',fx:applyFx({mood:-2})};if(!S.seen.includes(ev.id))S.seen.push(ev.id);save();render();return;}
  const cost=optCost(o);if(cost>S.money){toast(`存款不足：這個選項需要 ${cost.toLocaleString()} 元`);return;}
@@ -829,8 +906,9 @@ function chooseOption(i){
  list=applyFx(fx,scale);}
  if(tier===-2){const b=S.mood;S.mood=clamp(S.mood-3,0,100);if(S.mood-b)list.push(['心情',S.mood-b]);}
  if(!S.seen.includes(ev.id))S.seen.push(ev.id);
- S.sub.evRes={i,tier,check:o[1]&&res?{stat:o[1],dc:o[2],roll:res.roll,tot:res.tot}:null,text:fill(text),fx:list};
- S.log.push(`${phaseLabel(cur())}｜${ev.title}：${o[0]} → ${o[1]?TIER_NAME[tier]:'選擇'}`);
+ S.sub.evRes={i,tier,check:o[1]&&res?{stat:o[1],dc:o[2],roll:res.roll,tot:res.tot}:null,text:fill(text),fx:list,opt:fill(o[0])};
+ S.log.push(`${phaseLabel(cur())}｜${fill(ev.title)}：${S.sub.evRes.opt} → ${o[1]?TIER_NAME[tier]:'選擇'}`);
+ if(S.sub.crushEnd){S.sub.crushEnd=false;endCrush();}
  save();render();
 }
 function studyBonus(){return (S.sub.acts||[]).includes('專心學習')?EX.study:0;}
@@ -885,6 +963,9 @@ function applyActs(){
  const sel=S.sub.acts||[],ab=cur().kind==='abroad',list=[],msgs=[];
  sel.forEach(n=>{if(n==='參加語檢'||n==='陪伴愛人'||n===flAct())return;if(n==='駕照補考'){licenseTry(list,msgs);return;}const a=SEM_ACTS.find(x=>x[0]===n);list.push(...applyFx(a[2]));
   if(n==='參加社團'&&S.club){if(S.club.cat==='體適能社團')list.push(...applyFx({體能:1}));if(S.club.cat==='藝術性社團')list.push(...applyFx({才藝:1}));msgs.push(`在${S.club.name}度過了充實的一學期。`);S.tot.club=(S.tot.club||0)+1;}
+  if(n==='漫遊書海'){S.sub.lib=pick(LIBRARIES);msgs.push(`你走進${S.sub.lib}，在書架之間待了一整個下午。`);S.tot.lib=(S.tot.lib||0)+1;}
+  if(n==='房間追劇'){msgs.push('你一口氣追完了一整季的劇。');S.tot.drama=(S.tot.drama||0)+1;}
+  if(n==='遊玩電動'){msgs.push('你在遊戲裡熬夜破關，順便升了好幾級。');S.tot.game=(S.tot.game||0)+1;}
   if(n==='專心學習')S.tot.study++;if(n==='課餘打工')S.tot.work++;});
  if(sel.includes('參加語檢')){list.push(...applyFx({money:-LANG_FEE}));const sc=langScore(S.st.外語);const prev=S.lang||0;S.lang=Math.max(prev,sc);S.langTaken=(S.langTaken||0)+1;
   msgs.push(`語檢成績 ${sc.toFixed(1)}（外語 ${Math.floor(S.st.外語)}）${prev&&sc<=prev?`，沒有超過之前的 ${prev.toFixed(1)}`:prev?'，刷新了紀錄':''}。`);}
@@ -897,7 +978,10 @@ function applyActs(){
 }
 function goActs(){const k=actPicks();S.sub.picks=k.n;S.sub.ap=k.ap;S.sub.apParts=k.parts;S.sub.acts=[];S.step='acts';save();render();}
 function actsDone(){const ab=cur().kind==='abroad';
- S.q=(S.sub.crisis?['crisis']:[]).concat(ab?['ev','ev','ev','abFinal','settle']:semQueue());go();}
+ let q=ab?['ev','ev','ev','abFinal','settle']:semQueue();
+ // 漫遊書海：有機會在圖書館偶遇一位文靜、愛看書的人
+ if(!ab&&(S.sub.acts||[]).includes('漫遊書海')&&!S.npc.cr&&!S.flags.includes('交往')&&rand()<0.35){S.sub.meetSrc='漫遊書海';q=q.slice();q.splice(1,0,'fev:meet');}
+ S.q=(S.sub.crisis?['crisis']:[]).concat(q);go();}
 // 大一上固定有系烤、宿營；大一下系學會招募；系學會成員每學年上學期要舉辦系烤和宿營
 function semQueue(){const p=cur(),q=['ev','ev','mid','ev','final','settle'];
  if(p.y===1&&p.t===1)return['fev:d_bbq','ev','ev','mid','fev:d_camp','ev','final','settle'];
@@ -1029,6 +1113,61 @@ function pickCareer(name){const {m,rec}=careerMenu();const prob=m.find(x=>x.n===
  S.log.push(`畢業｜選擇${careerLabel(name)}（成功率 ${Math.round(prob*100)}%）→ ${outcome===2?'大成功':outcome===1?'成功':'失敗'}`);
  S.step='careerResult';save();render();}
 
+
+/* ================= 日後談 =================
+   畢業後的走向、求學回顧、一路上的人與感情。一律用正面、溫暖的語氣書寫。
+   [順利時, 沒有一次到位時（仍以正面收尾）] */
+const EPI_CAREER={
+ '研究所':['你在研究所埋首研究，口試那天，{pf}特地來旁聽，結束後拍拍你的肩膀說：「做得很好。」','第一年的研究所考試沒有如願，但你在圖書館認識了一群一起拚的戰友。隔年放榜，你們全都上了。'],
+ '交換校研究所':['你回到{school}攻讀研究所，走在熟悉的校園裡，像是回到了第二個家。','第一次申請{school}沒有上，但你把那段交換的日子寫進新的讀書計畫，隔年順利拿到入學許可。'],
+ '出國留學':['你拿著獎學金出國念書，在異國的圖書館裡，偶爾會想起湖畔圖書館窗外的那片水光。','第一輪申請沒有如願，你一邊工作一邊準備，一年後帶著更完整的履歷，踏上留學的旅程。'],
+ '公職':['你通過國考，成為一名公務員。每天處理的公文背後，都是一個個真實的人。','第一次國考差了幾分，但你沒有放棄，隔年穩穩上榜，被分發到離家很近的單位。'],
+ '律師／司法官':['你通過國家考試，穿上法袍的那一天，家人在台下哭得比你還用力。','國考是一場長跑，你多跑了一圈，但最後依然站上了你想站的位置。'],
+ '外交特考':['你通過外交特考，第一次以外交官的身分出國時，護照封面的顏色看起來格外不同。','第一次外交特考沒有上榜，你先進了國際組織實習，兩年後如願考進外交部。'],
+ '金融與四大':['你進了金融業，第一份年終獎金拿來帶家人吃了一頓好的。','第一年在金融業的面試接連碰壁，但你把每次失敗都記成筆記，後來拿到了一間更適合你的公司的錄取。'],
+ '外商企業':['你進了外商公司，會議室裡說著各種語言，你很快就找到自己的節奏。','外商的面試一開始不順，但你在一間中型公司把基本功練扎實，兩年後被獵頭挖去了理想的外商。'],
+ '科技業':['你在科技業落腳，你寫的功能上線那天，在通勤的捷運上看到有人正在用。','剛畢業時科技業的門檻有點高，你自學補強了作品集，半年後拿到了心儀公司的錄取。'],
+ '媒體與廣告':['你走進媒體與廣告圈，第一支作品在街頭的大螢幕上播出時，你站在路口看了好久。','剛入行時作品常被退件，但你一次次改稿，終於做出一支讓業界記住你名字的作品。'],
+ '教育工作':['你成為一名老師，第一屆學生畢業時，送了你一本寫滿祝福的卡片冊。','教甄不是一次就考上，你先當了兩年代理老師，累積的經驗讓你隔年順利成為正式教師。'],
+ '新創':['你和夥伴創立的公司活了下來，還慢慢長大，辦公室從車庫搬進了真正的大樓。','第一間公司沒能撐下去，但那段經歷讓你學到太多。幾年後你帶著更成熟的想法，再次出發。'],
+ '自由接案':['你成為自由工作者，接案、旅行、創作，把日子過成自己喜歡的樣子。','剛開始接案的日子很不穩定，你一邊兼職一邊經營作品，慢慢累積起一群固定的合作夥伴。'],
+ '一般企業':['你在一間公司穩穩地工作，幾年後成為團隊裡大家最信任的那個人。','第一份工作不太適合你，但換了一次跑道後，你找到一個能讓自己發揮的位置。'],
+ 'Gap year':['你給了自己一年的空檔去旅行和打工，回來時，你清楚知道自己想往哪裡走。','空檔年比想像中漫長，但在那段時間裡，你慢慢找到了真正想做的事。']};
+function makeEpilogue(){
+ const out=[],c=S.career,k=c&&EPI_CAREER[c.key]?c.key:'一般企業';const ok=c&&c.outcome>0;
+ const careerTxt=cfill(EPI_CAREER[k][ok?0:1]).replace(/\{pf\}/g,S.npc.pf||'系上的教授');
+ out.push(['畢業之後',`你選擇了「${c?c.name:'一般企業'}」這條路。${careerTxt}${c&&c.outcome===2?'一切比你想像中還要順利。':''}`]);
+ // 求學回顧
+ const mem=[];const yrs=S.delayed?'五':'四';
+ if(S.ex.accepted)mem.push(`在${S.ex.city}交換的日子，讓你看見了更大的世界`);
+ if(S.club)mem.push(`在${S.club.name}度過了數不清的社課夜晚`);
+ if(S.flags.includes('系學會'))mem.push('和系學會的夥伴一起辦過好幾屆系烤和宿營');
+ if(S.flags.includes('幹部'))mem.push('當過幹部，學會了怎麼帶著一群人往前走');
+ if(S.titles.書卷>0)mem.push(`拿過 ${S.titles.書卷} 次書卷獎`);
+ if(S.flags.includes('實習'))mem.push('大三的實習讓你第一次走進職場');
+ if(S.flags.includes('夜爬'))mem.push('半夜爬上指南山看過台北的夜景');
+ if((S.tot.lib||0)>=2)mem.push(`在${pick(LIBRARIES)}讀過好多本不在課表上的書`);
+ if(S.license==='ok')mem.push('考到了駕照');
+ if(S.minor)mem.push(`修完了${S.minor}`);
+ const pickMem=mem.slice(0,4);
+ out.push(['在山腳下的日子',`回想在${SCHOOL}的${yrs}年，${pickMem.length?pickMem.join('、')+'。':'每一天都平凡卻踏實。'}${S.delayed?'多讀的那一年，反而讓你更清楚自己想要什麼。':''}從${S.college}${S.dept}畢業的那天，你在指南山腳下回頭看了一眼，覺得這幾年過得很值得。`]);
+ // 人
+ const ppl=[];const dorm=HOUSING[S.housing].dorm;
+ if(S.npc.rm)ppl.push(`${dorm?'大一的室友':'大學最好的朋友'}${S.npc.rm}到現在還常常約你吃飯，每次見面都會聊起當年的糗事`);
+ const fr=(S.friends||[]).slice(0,3);if(fr.length)ppl.push(`系烤、宿營和各種活動認識的${fr.join('、')}，成了一輩子的朋友`);
+ if(S.npc.sr)ppl.push(`直屬${S.srMale?'學長':'學姊'}${S.npc.sr}後來成了你工作上的前輩，常常給你中肯的建議`);
+ if(S.npc.pf)ppl.push(`你偶爾回系上看看${S.npc.pf}，${S.npc.pf.replace('教授','')}老師總記得你大一時的樣子`);
+ out.push(['一路上的人',ppl.join('；')+'。']);
+ // 感情
+ const cr=S.npc.cr,he=S.npc.pr||'他';let love;
+ if(cr&&S.proposal&&S.proposal.ok)love=`畢業後第二年，你和${cr}舉辦了婚禮。${S.roomies&&S.roomies.length?'當年的室友們':'老朋友們'}坐滿了好幾桌，大家都說你們是從學生時代就讓人羨慕的一對。`;
+ else if(cr&&S.flags.includes('交往'))love=`你和${cr}還是在一起。從校園走進社會，兩個人一起經歷了第一份工作、第一次搬家，感情也越來越穩定。`;
+ else{const r=Math.floor(rand()*3);const nn=newSurname();const p2=S.pref==='女生'?'她':S.pref==='男生'?'他':(rand()<.5?'他':'她');
+  love=r===0?`工作第三年，你在一次跨部門專案裡認識了${nn}。${p2}做事認真，笑起來很溫暖，你們從討論企劃聊到下班後的晚餐，後來自然而然地走在了一起。`
+   :r===1?`畢業五週年的同學會上，你和${nn}聊得特別投機。原來大學四年你們修過同一堂通識，卻一直沒說過話。那天之後，你們開始約週末見面，後來成了彼此最重要的人。`
+   :'你選擇了單身。你喜歡一個人的自在：下班後去上喜歡的課、假日說走就走地旅行，身邊有一群好朋友，日子過得充實又快樂。';}
+ out.push(['感情',love]);
+ return out;}
 /* ================= 稱號與總結 ================= */
 function computeTitles(){const t=[];
  if(S.titles.書卷>=3)t.push('書卷常客');else if(S.titles.書卷>=1)t.push('書卷獎得主');
@@ -1082,6 +1221,13 @@ function render(){
 }
 
 let CF={};
+const VERSION='1.2';
+const VERSION_NOTES=['感情線更豐富：新增深夜訊息、雨天共傘、情敵、生日驚喜、連假旅行、一起下廚、見家長、聊未來等事件，感情事件更常出現',
+ '告白失敗後會回到朋友關係，之後還能遇見新的心動對象',
+ '對象有了個性：在哪裡認識決定對方的特質與興趣，例如體適能社團認識的人比較外向，圖書館遇見的人比較文靜',
+ '學期安排新增「房間追劇」「遊玩電動」「漫遊書海」，漫遊書海有機會在圖書館偶遇愛看書的人',
+ '畢業結算新增「日後談」：畢業後的走向、求學回顧、一路上的朋友與師長，以及感情的結局'];
+function versionCard(){return `<div class="card small"><h3 style="margin-top:0">Version ${VERSION} 更新重點</h3><ul style="margin:0;padding-left:20px">${VERSION_NOTES.map(n=>`<li style="margin:4px 0">${esc(n)}</li>`).join('')}</ul></div>`;}
 function viewStart(){const sv=loadSave();const qs=new URLSearchParams(location.search).get('seed');
  return `<div class="card hero"><div class="mountain"></div><h1>指南山腳下</h1><p>${SCHOOL}四年人生模擬器。每學期分配時間、面對突發事件，畢業時決定你的人生方向。</p>
  <p class="small">相同 Seed ＋ 相同選擇 ＝ 相同人生</p></div>
@@ -1090,8 +1236,9 @@ function viewStart(){const sv=loadSave();const qs=new URLSearchParams(location.s
  ${qs?`<button class="btn ghost" data-act="newForm" data-arg="${esc(qs)}">用朋友的 Seed「${esc(qs)}」開始</button>`:''}
  ${sv&&sv.step!=='result'?`<button class="btn" data-act="continue">繼續上次的進度<small>${esc(sv.name)}・${esc(sv.dept)}・${esc(phaseLabel(sv.phases[sv.pi]))}</small></button>`:''}
  <button class="btn ghost" data-act="importForm">匯入存檔碼</button></div>
- <div class="card small muted"><h3 style="margin-top:0">玩法</h3><p>一局共 16 個時段：每學年依序是上學期、寒假、下學期、暑假。學期中你要選課、分配行動點、面對三個事件；假期選擇活動並分配能力點。大二可以報名出國交換，畢業時從十四種職涯中挑一條路——每條路都可能失敗，但不管結果如何，都會拿到一張屬於你的畢業結算圖。</p></div>
- <p class="foot">虛構作品，與任何真實學校無關。</p>`;}
+ <div class="card small muted"><h3 style="margin-top:0">玩法</h3><p>一局共 16 個時段：每學年依序是上學期、寒假、下學期、暑假。學期中你要選課、安排這學期要做的事，再面對隨機事件；假期選擇怎麼度過。大二、大三可以報名出國交換，畢業時從十四種職涯中挑一條路——每條路都可能失敗，但不管結果如何，都會拿到一張屬於你的畢業結算圖和一段日後談。</p></div>
+ ${versionCard()}
+ <p class="foot">Version ${VERSION}・虛構作品，與任何真實學校無關。</p>`;}
 function viewCreate(){
  const col=CF.college,depts=DEPTS.filter(x=>x[0]===col);if(!depts.find(x=>x[1]===CF.dept))CF.dept=depts[0][1];
  if(GROUPS[CF.dept]&&!GROUPS[CF.dept].includes(CF.group))CF.group=GROUPS[CF.dept][0];
@@ -1099,7 +1246,7 @@ function viewCreate(){
  const seed=cleanSeed(CF.seed),pts=seedPoints(seed),fp=CF.fp||{},used=Object.values(fp).reduce((a,b)=>a+b,0),left=pts-used,fit=seedFitness(seed),fam=seedFamily(seed);
  const opt=(arr,key,lab)=>`<div class="opts">${arr.map(x=>`<button class="opt ${CF[key]===x?'on':''}" data-act="cf" data-arg="${key}|${esc(x)}">${esc(lab?lab(x):x)}</button>`).join('')}</div>`;
  const base={...st,體能:fit};
- return `<div class="card"><h2>入學報到</h2>
+ return `${versionCard()}<div class="card"><h2>入學報到 <span class="tag">Version ${VERSION}</span></h2>
  <label class="f">姓名</label><input type="text" id="f-name" maxlength="12" value="${esc(CF.name||'')}" placeholder="輸入你的名字">
  <label class="f">性別（影響體育課的選課限制）</label>${opt(['男生','女生'],'gender')}
  <label class="f">學院（強度 ${c.tier}／6・${fxText(c.b)}・專屬路線：${esc(c.route)}）</label>
@@ -1171,11 +1318,11 @@ function viewCrisis(){const I=S.rel.cr;return `<div class="card"><p class="muted
  <p class="muted small">目前親密度 ${I}。親密度越高，越有機會挽回。</p>
  ${CRISIS_OPTS.map((o,i)=>`<button class="btn" data-act="crisis" data-arg="${i}">${esc(o.t)}</button>`).join('')}</div>`;}
 function viewEvent(){const ev=EVENTS.find(e=>e.id===S.sub.ev);const r=S.sub.evRes;
- if(!r)return `<div class="card"><p class="muted small">${esc(phaseLabel(cur()))}・事件</p><h2>${esc(ev.title)}</h2><p>${esc(fill(ev.text))}</p>
- ${ev.o.map((o,i)=>{const c=optCost(o);return `<button class="btn" data-act="opt" data-arg="${i}">${esc(fill(o[0]))}<small>${o[9]||(o[1]?`${o[1]}判定`:'必定發生')}${c?`・需 ${c.toLocaleString()} 元`:''}${c>S.money?' <b style="color:var(--accent)">存款不足</b>':''}</small></button>`;}).join('')}
- ${ev.o.every(o=>optCost(o)>S.money)?`<button class="btn ghost" data-act="opt" data-arg="-1">存款不足，只能錯過<small>心情−2</small></button>`:''}</div>`;
- const o=ev.o[r.i]||['錯過'];
- return `<div class="card"><p class="muted small">${esc(ev.title)}・你選擇了「${esc(fill(o[0]))}」</p>
+ if(!r)return `<div class="card"><p class="muted small">${esc(phaseLabel(cur()))}・事件</p><h2>${esc(fill(ev.title))}</h2><p>${esc(fill(ev.text))}</p>
+ ${evOpts(ev).map((o,i)=>{const c=optCost(o);return `<button class="btn" data-act="opt" data-arg="${i}">${esc(fill(o[0]))}<small>${o[9]||(o[1]?`${o[1]}判定`:'必定發生')}${c?`・需 ${c.toLocaleString()} 元`:''}${c>S.money?' <b style="color:var(--accent)">存款不足</b>':''}</small></button>`;}).join('')}
+ ${evOpts(ev).every(o=>optCost(o)>S.money)?`<button class="btn ghost" data-act="opt" data-arg="-1">存款不足，只能錯過<small>心情−2</small></button>`:''}</div>`;
+ const o=[r.opt||'錯過'];
+ return `<div class="card"><p class="muted small">${esc(fill(ev.title))}・你選擇了「${esc(fill(o[0]))}」</p>
  ${r.check?`<p class="result-tier t${r.tier}">${TIER_NAME[r.tier]}</p><p class="muted small">${r.check.stat}判定：擲出 ${r.check.roll}${r.check.tot!=null?`，總分 ${r.check.tot}`:''}，難度 ${r.check.dc}</p>`:''}
  <p>${esc(r.text)}</p>${fxHtml(r.fx)}<button class="btn primary" data-act="next" style="margin-top:14px">繼續</button></div>`;}
 function viewMid(){const m=S.sub.mid;return `<div class="card"><h2>期中考</h2>
@@ -1247,7 +1394,7 @@ function viewBreakChoose(){const p=cur(),win=p.kind==='win',acts=breakActs(),nee
 function viewBreakSettle(){return `<div class="card"><h2>假期結束</h2>${(S.sub.bmsgs||[]).map(m=>`<p>${esc(m)}</p>`).join('')}${fxHtml(S.sub.blist||[])}
  <button class="btn primary" data-act="bSettleOk" style="margin-top:14px">開學</button></div>`;}
 function viewAbroadCourses(){S.sub.credits=S.sub.credits||15;return `<div class="card"><h2>海外學期・${esc(S.ex.city)}</h2>
- <p>新的城市、新的語言。這學期要修幾學分？回國後大部分學分可以抵免（${S.ex.plan==='學年'?'一學年交換約 66–88%':'一學期交換約 95–100%'}，專業越高越容易找到對應課程）；原本這學期的系上必修，大多能用交換課程抵免，其餘要回國補修。</p>
+ <p>新的城市、新的語言。這學期要修幾學分？回國後大部分學分可以抵免（${S.ex.plan==='學年'?'一學年交換約 62–86%':'一學期交換約 95–100%'}，專業越高越容易找到對應課程）；原本這學期的系上必修，大多能用交換課程抵免，其餘要回國補修。</p>
  ${(S.sub.abMsgs||[]).length?`<h3>原本這學期的系上課程</h3>${S.sub.abMsgs.map(m=>`<p class="small">${esc(m)}</p>`).join('')}`:''}
  <label class="f">修課學分：<b>${S.sub.credits}</b></label><input type="range" id="f-abcredits" min="12" max="21" value="${S.sub.credits}" style="width:100%">
  <button class="btn primary" data-act="abOk" style="margin-top:12px">開學</button></div>`;}
@@ -1274,7 +1421,7 @@ function doPropose(yes){
  S.log.push(`畢業｜向${S.npc.cr}求婚 → ${ok?'成功':'被婉拒'}`);
  S.sub.result={title:ok?'求婚成功':'對方還沒準備好',text:ok?`${S.npc.cr}摀著嘴點了好幾次頭，周圍的同學都在歡呼。`:`${S.npc.cr}握著你的手說：「我很愛你，但再給我一點時間好嗎？」你們還是在一起，只是婚禮要再等等。`,fx:applyFx({mood:ok?15:-5})};
  S.q=[];S.sub.toResult=true;S.step='result1';save();render();}
-function viewResult(){const t=computeTitles(),c=S.career,np=topNpc();S.sub.titlesCache=t;
+function viewResult(){if(!S.epilogue){S.epilogue=makeEpilogue();save();}const t=computeTitles(),c=S.career,np=topNpc();S.sub.titlesCache=t;
  return `<div class="card"><h2>畢業結算</h2><div class="share" id="share-box"><p class="muted small">正在產生結算圖…</p></div>
  <div class="row" style="margin-top:12px"><button class="btn primary" data-act="download">下載結算圖</button><button class="btn" data-act="copyLink" style="text-align:center">複製分享連結</button></div></div>
  <div class="card"><h3 style="margin-top:0">${esc(S.name)}・${esc(S.college)}${esc(S.dept)}</h3>
@@ -1284,6 +1431,7 @@ function viewResult(){const t=computeTitles(),c=S.career,np=topNpc();S.sub.title
  <tr><td>語檢</td><td class="r">${S.lang?S.lang.toFixed(1):'沒考'}${S.flang?`・${FL_TESTS[S.flang.g].lang} ${flName(S.flang.g,S.flang.r)}`:''}</td></tr><tr><td>交換</td><td class="r">${S.ex.accepted?`${esc(S.ex.city)}・${S.ex.plan==='學年'?'一學年':'一學期'}・海外 GPA ${abroadGpa().toFixed(2)}`:'沒有'}</td></tr>
  ${S.club?`<tr><td>社團</td><td class="r">${esc(S.club.name)}</td></tr>`:''}${S.flags.includes('交往')&&S.npc.cr?`<tr><td>感情</td><td class="r">${esc(S.npc.cr)}・親密度 ${S.rel.cr}${S.proposal&&S.proposal.asked?(S.proposal.ok?'・求婚成功':'・求婚被婉拒'):''}</td></tr>`:''}<tr><td>延畢</td><td class="r">${S.delayed?'是':'否'}</td></tr>
  ${np?`<tr><td>最重要的人</td><td class="r">${esc(np.l)} ${esc(np.n)}</td></tr>`:''}<tr><td>Seed</td><td class="r">${esc(S.seed)}</td></tr></table>
+ ${(S.epilogue||[]).length?`<h3>日後談</h3>${S.epilogue.map(([h,x])=>`<p style="margin:10px 0 2px"><b>${esc(h)}</b></p><p style="margin:0">${esc(x)}</p>`).join('')}`:''}
  <h3>稱號</h3><p>${t.length?t.map(x=>`<span class="tag gold">${esc(x)}</span>`).join(' '):'<span class="muted">平凡也是一種幸福</span>'}</p>
  <h3>四年紀錄</h3><div class="small muted" style="max-height:220px;overflow:auto">${S.log.map(l=>esc(l)).join('<br>')}</div>
  <button class="btn primary" data-act="again" style="margin-top:14px">再玩一次</button></div>`;}
