@@ -6,6 +6,7 @@
 <meta name="description" content="指南山腳下：在動物園大學度過四年的大學人生模擬器">
 <title>指南山腳下</title>
 <link rel="icon" href="icons/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2323473c'/%3E%3Cpath d='M6 49 23 22 32 34 43 16 58 49Z' fill='%23f2f4ea'/%3E%3Cpath d='M27 34h10v15H27zM24.5 34.4 32 25l7.5 9.4z' fill='%23c4432b'/%3E%3Ccircle cx='32' cy='39' r='2.4' fill='%23f2f4ea'/%3E%3Ccircle cx='15' cy='15' r='4.5' fill='%23ffd84d'/%3E%3Cpath d='M6 49h52v4H6z' fill='%23a8733a'/%3E%3C/svg%3E">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
@@ -179,7 +180,8 @@ ul{line-height:1.6}
 
 /* ---------- 首頁：校門口的海報 ---------- */
 .hero{background:linear-gradient(180deg,var(--sky1) 0%,var(--sky2) 70%);border:0;padding:26px 16px 0;overflow:hidden}
-.eyebrow{margin:0 0 4px;font:700 13px/1.6 var(--num);letter-spacing:.2em;color:var(--ink);opacity:.7}
+.eyebrow{display:flex;align-items:center;gap:9px;margin:0 0 8px;font:700 13px/1.6 var(--num);letter-spacing:.2em;color:var(--ink)}
+.logo{width:30px;height:30px;flex:none;border-radius:7px}
 .hero h1{color:var(--ink)}
 .hero h1::after{content:"";display:block;width:56px;height:5px;margin-top:12px;background:var(--primary)}
 .hero p{color:var(--ink);max-width:19em}
@@ -1247,6 +1249,8 @@ const ICON={'snowflake':'<path d="M227.65,149.14a12,12,0,0,1-8.79,14.51l-20.67,5
 'heart':'<path d="M178,36c-20.09,0-37.92,7.93-50,21.56C115.92,43.93,98.09,36,78,36a66.08,66.08,0,0,0-66,66c0,72.34,105.81,130.14,110.31,132.57a12,12,0,0,0,11.38,0C138.19,232.14,244,174.34,244,102A66.08,66.08,0,0,0,178,36Zm-5.49,142.36A328.69,328.69,0,0,1,128,210.16a328.69,328.69,0,0,1-44.51-31.8C61.82,159.77,36,131.42,36,102A42,42,0,0,1,78,60c17.8,0,32.7,9.4,38.89,24.54a12,12,0,0,0,22.22,0C145.3,69.4,160.2,60,178,60a42,42,0,0,1,42,42C220,131.42,194.18,159.77,172.51,178.36Z"/>',
 'medal':'<path d="M220,96A92,92,0,1,0,68,165.69V240a12,12,0,0,0,17.37,10.73L128,229.42l42.64,21.31A12,12,0,0,0,188,240V165.69A91.86,91.86,0,0,0,220,96ZM60,96a68,68,0,1,1,68,68A68.07,68.07,0,0,1,60,96ZM164,220.59l-30.64-15.32a12,12,0,0,0-10.74,0L92,220.58V180.66a92,92,0,0,0,72,0ZM128,148A52,52,0,1,0,76,96,52.06,52.06,0,0,0,128,148Zm0-80a28,28,0,1,1-28,28A28,28,0,0,1,128,68Z"/>'};
 function ico(n){return '<svg class="i" viewBox="0 0 256 256" aria-hidden="true">'+ICON[n]+'</svg>';}
+/* 遊戲標誌：雙峰指南山、山腳下的紅磚鐘塔、太陽，底下是粉筆槽 */
+const LOGO='<svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#23473c"/><path d="M6 49 23 22 32 34 43 16 58 49Z" fill="#f2f4ea"/><path d="M27 34h10v15H27zM24.5 34.4 32 25l7.5 9.4z" fill="#c4432b"/><circle cx="32" cy="39" r="2.4" fill="#f2f4ea"/><circle cx="15" cy="15" r="4.5" fill="#ffd84d"/><path d="M6 49h52v4H6z" fill="#a8733a"/></svg>';
 function seasonIcon(l){return ico(/寒假/.test(l)?'snowflake':/暑假/.test(l)?'sun':/上學期/.test(l)?'leaf':/下學期/.test(l)?'flower':/海外/.test(l)?'airplane-tilt':'graduation-cap');}
 function moodIcon(v){return ico(v>=65?'smiley':v>=35?'smiley-meh':'smiley-sad');}
 function renderHud(){const h=$('#hud');if(!S||['intro'].includes(S.step)&&!S.phases.length){h.hidden=true;return;}
@@ -1310,7 +1314,7 @@ const VERSION_NOTES=['自己選課：每學期從可加選的選修裡勾選，�
  '結算新增人生年表、十年後的同學會番外；首頁新增成就牆（30 個成就，可匯出）；分享連結可以和朋友並排比較同一個 Seed 的人生'];
 function versionCard(){return `<div class="card small"><h3 style="margin-top:0">Version ${VERSION} 更新重點</h3><ul style="margin:0;padding-left:20px">${VERSION_NOTES.map(n=>`<li style="margin:4px 0">${esc(n)}</li>`).join('')}</ul></div>`;}
 function viewStart(){const sv=loadSave();const qs=new URLSearchParams(location.search).get('seed');const fc=urlCmp();const achN=Object.keys(achStore().u).length;
- return `<div class="card hero"><span class="stamp" aria-hidden="true">115 學年<br>新生報到</span><p class="eyebrow">Beneath Mount Zhinan</p><h1>指南山腳下</h1><p>${SCHOOL}四年人生模擬器。每學期分配時間、面對突發事件，畢業時決定你的人生方向。</p>
+ return `<div class="card hero"><span class="stamp" aria-hidden="true">115 學年<br>新生報到</span><p class="eyebrow">${LOGO}Beneath Mount Zhinan</p><h1>指南山腳下</h1><p>${SCHOOL}四年人生模擬器。每學期分配時間、面對突發事件，畢業時決定你的人生方向。</p>
  <p class="small">相同 Seed ＋ 相同選擇 ＝ 相同人生</p><svg class="hero-art" viewBox="0 0 360 190" preserveAspectRatio="xMidYMax slice" role="img" aria-label="指南山腳下的校園：遠山與纜車、紅磚鐘塔校舍、拱廊、旗桿與操場跑道">
 <circle cx="302" cy="36" r="16" fill="var(--sun)"/>
 <path class="cloud" fill="var(--cloud)" d="M24 42 a9 9 0 0 1 16 -6 a11 11 0 0 1 21 3 a7 7 0 0 1 2 14 h-38 a7.5 7.5 0 0 1 -1 -11Z"/>
@@ -1576,7 +1580,10 @@ function drawCard(){
  const g=cv.getContext&&cv.getContext('2d');if(!g)return null;
  const F='"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif';const c=S.career;
  g.fillStyle='#f1f3ef';g.fillRect(0,0,1080,1560);g.strokeStyle='rgba(28,36,48,.07)';g.lineWidth=2;for(let i=0;i<=1080;i+=36){g.beginPath();g.moveTo(i,0);g.lineTo(i,1560);g.stroke();}for(let j=0;j<=1560;j+=36){g.beginPath();g.moveTo(0,j);g.lineTo(1080,j);g.stroke();}
- g.fillStyle='#23473c';g.fillRect(0,0,1080,330);g.fillStyle='#ffd84d';g.beginPath();g.arc(940,92,48,0,7);g.fill();g.strokeStyle='#1c2430';g.lineWidth=5;g.stroke();
+ g.fillStyle='#23473c';g.fillRect(0,0,1080,330);
+ // 右上角的遊戲標誌（與 LOGO 同一組座標，放大 2.8 倍）
+ {const X=u=>862+u*2.8,Y=v=>26+v*2.8,poly=(c,pts)=>{g.fillStyle=c;g.beginPath();pts.forEach(([u,v],i)=>i?g.lineTo(X(u),Y(v)):g.moveTo(X(u),Y(v)));g.closePath();g.fill();},dot=(c,u,v,r)=>{g.fillStyle=c;g.beginPath();g.arc(X(u),Y(v),r*2.8,0,7);g.fill();};
+  poly('#f2f4ea',[[6,49],[23,22],[32,34],[43,16],[58,49]]);poly('#c4432b',[[27,34],[37,34],[37,49],[27,49]]);poly('#c4432b',[[24.5,34.4],[32,25],[39.5,34.4]]);dot('#f2f4ea',32,39,2.4);dot('#ffd84d',15,15,4.5);}
  g.fillStyle='#1a382f';g.beginPath();g.moveTo(0,330);g.lineTo(300,200);g.lineTo(520,290);g.lineTo(760,170);g.lineTo(1080,300);g.lineTo(1080,330);g.closePath();g.fill();
  // 黑板的粉筆框與木頭粉筆槽
  g.strokeStyle='rgba(242,244,234,.3)';g.lineWidth=3;g.strokeRect(24,24,1032,278);
