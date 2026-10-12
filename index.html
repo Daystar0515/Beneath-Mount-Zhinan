@@ -11,206 +11,209 @@
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="指南山腳下">
 <meta name="application-name" content="指南山腳下">
-<meta name="theme-color" content="#eef4ff" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0d1230" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f1f3ef" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#11181a" media="(prefers-color-scheme: dark)">
 <style>
 :root{
-  /* 青春校園：午後陽光的方格筆記本、天空藍、便利貼黃、櫻花粉 */
-  --bg:#eef4ff;--grid:rgba(47,91,255,.075);--paper:#ffffff;--ink:#16204f;--muted:#5b6690;--line:#d3ddf6;--edge:#16204f;
-  --blue:#2f5bff;--blue-soft:#e2e9ff;--yellow:#ffd23f;--note:#fff2a6;--hl:rgba(255,210,63,.7);
-  --good:#0f9a68;--good-soft:#d8f4e7;--bad:#e03e3e;--bad-soft:#ffe1df;--orange:#d9741a;--field:#f6f8ff;--goldink:#7a5600;
-  --pink:#ff6b8b;--pink-soft:#ffe6ec;--tape:rgba(255,107,139,.55);--tape2:rgba(255,107,139,.3);--mark:#ffd23f;
-  --glow1:rgba(255,210,63,.3);--glow2:rgba(255,107,139,.15);--card-sh:rgba(47,91,255,.13);
-  --sky1:#9fd6ff;--sky2:#ffeccf;--hill1:#8cc3ee;--hill2:#5a9ad8;--hill3:#2f6fb0;--grass:#86d99a;--wall:#fff7e0;--roof:#ff7a59;--sun:#ffd23f;--blossom:#ffb3c7;--cloud:#ffffff;
-  --s1:#2f5bff;--s2:#8a5cf6;--s3:#0fa7a0;--s4:#ec4d8a;--s5:#ff8a1f;--s6:#17a863;
-  --round:ui-rounded,"SF Pro Rounded","Yuanti TC","jf-openhuninn-2.0","GenSenRounded TW","Nunito","PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;
+  /* 大學校園：黑板、紅磚校舍、公佈欄上的紙張 */
+  --bg:#f1f3ef;--grid:rgba(28,36,48,.11);--paper:#fdfdfb;--ink:#1c2430;--muted:#5a6472;--line:#d6dbd8;--rule:#aeb7ba;--edge:#1c2430;
+  --board:#23473c;--board2:#1a382f;--chalk:#f2f4ea;--chalk-dim:rgba(242,244,234,.72);--chalk-line:rgba(242,244,234,.32);--tray:#a8733a;--tray2:#7c5226;
+  --brick:#b93c25;--brick-soft:#fae6e0;--primary:#c4432b;--primary-h:#ad3821;--primary-d:#8f2c18;
+  --yellow:#ffd84d;--note:#fff3b0;--hl:rgba(255,216,77,.72);--goldink:#6b4e00;
+  --good:#177a52;--good-soft:#dcf1e6;--bad:#b23a22;--bad-soft:#fae6e0;--orange:#a85a0a;--field:#f6f7f4;--warm:#a85a0a;
+  --sky1:#cfe6f3;--sky2:#f3f6ee;--hill1:#a9cdb4;--hill2:#78a98d;--hill3:#3f7a61;--grass:#8cc58f;--bk:#c4533b;--bk2:#a64431;--trim:#fdfdfb;--roof:#3b4754;--win:#2b3a4a;--sun:#ffd84d;--cloud:#ffffff;--track:#d9684d;
+  /* 黑板上的粉筆色，只用在狀態列的能力條 */
+  --s1:#8ec5ff;--s2:#c9a8ff;--s3:#7fe0d4;--s4:#ff9fc0;--s5:#ffc27a;--s6:#a8e58a;
+  --num:"DIN Alternate","Bahnschrift","Roboto Condensed","Arial Narrow","PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;
+  --kai:"Kaiti TC","BiauKai","DFKai-SB","TW-Kai","PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;
   /* 舊名稱保留，避免 JS 內嵌樣式失效 */
-  --accent:var(--bad);--green:var(--blue);--green2:var(--good);--gtext:var(--blue);--soft:var(--blue-soft);--gold:var(--orange);
-  --redsoft:var(--bad-soft);--goldsoft:var(--note);--pbar:#dfe6fb;--primary:var(--blue);--primary-h:#2449d6;--warm:#d9692b;
-  --shadow:0 1px 0 rgba(22,32,79,.04),0 8px 20px var(--card-sh);color-scheme:light;
+  --accent:var(--bad);--blue:var(--brick);--blue-soft:var(--brick-soft);--green:var(--brick);--green2:var(--good);--gtext:var(--brick);--soft:var(--brick-soft);--gold:var(--orange);
+  --redsoft:var(--bad-soft);--goldsoft:var(--note);--pbar:#e1e5e2;
+  --shadow:0 1px 0 var(--line),0 10px 22px -12px rgba(28,36,48,.28);color-scheme:light;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#0d1230;--grid:rgba(160,175,255,.06);--paper:#171f47;--ink:#eef1ff;--muted:#9aa6d8;--line:#2a3670;--edge:#5866bf;
-  --blue:#6f8dff;--blue-soft:#232e66;--yellow:#ffd23f;--note:#5a4a14;--hl:rgba(255,210,63,.28);
-  --good:#4fd6a0;--good-soft:#17382f;--bad:#ff8a84;--bad-soft:#42232a;--orange:#ffb15c;--field:#10173a;--goldink:#ffd98a;
-  --pink:#ff8fa8;--pink-soft:#45223a;--tape:rgba(255,143,168,.5);--tape2:rgba(255,143,168,.28);--mark:rgba(255,210,63,.32);
-  --glow1:rgba(111,141,255,.18);--glow2:rgba(255,143,168,.09);--card-sh:rgba(0,0,0,.3);
-  --sky1:#131b4f;--sky2:#3b2f6e;--hill1:#33489a;--hill2:#27397f;--hill3:#1d2c68;--grass:#2c6b58;--wall:#26305f;--roof:#d8624a;--sun:#ffe08a;--blossom:#c9708d;--cloud:#35418a;
-  --pbar:#26306a;--primary:#4a6bff;--primary-h:#5f7dff;--shadow:0 1px 0 rgba(0,0,0,.2),0 8px 20px var(--card-sh);color-scheme:dark}}
+  --bg:#11181a;--grid:rgba(242,244,234,.07);--paper:#1a2326;--ink:#eceee6;--muted:#9da8aa;--line:#2f3b3e;--rule:#4d5a5e;--edge:#5d6b70;
+  --board:#1c3a31;--board2:#152c25;--tray:#7a5327;--tray2:#54381a;
+  --brick:#ff9076;--brick-soft:#3c211b;--primary:#c4432b;--primary-h:#d5543b;--primary-d:#7f2716;
+  --note:#4f4312;--hl:rgba(255,216,77,.26);--goldink:#ffe08a;
+  --good:#5fd3a0;--good-soft:#16352a;--bad:#ff9076;--bad-soft:#3c211b;--orange:#ffb45e;--field:#141c1e;--warm:#ffb45e;
+  --sky1:#10202a;--sky2:#1d3330;--hill1:#2c4a45;--hill2:#223b38;--hill3:#18302c;--grass:#244a3a;--bk:#8f3b2b;--bk2:#742e21;--trim:#cfd3c8;--roof:#20282f;--win:#ffd84d;--sun:#f5e7a6;--cloud:#2c4046;--track:#7d3a2b;
+  --pbar:#2a3538;--shadow:0 1px 0 var(--line),0 10px 22px -12px rgba(0,0,0,.6);color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#0d1230;--grid:rgba(160,175,255,.06);--paper:#171f47;--ink:#eef1ff;--muted:#9aa6d8;--line:#2a3670;--edge:#5866bf;
-  --blue:#6f8dff;--blue-soft:#232e66;--yellow:#ffd23f;--note:#5a4a14;--hl:rgba(255,210,63,.28);
-  --good:#4fd6a0;--good-soft:#17382f;--bad:#ff8a84;--bad-soft:#42232a;--orange:#ffb15c;--field:#10173a;--goldink:#ffd98a;
-  --pink:#ff8fa8;--pink-soft:#45223a;--tape:rgba(255,143,168,.5);--tape2:rgba(255,143,168,.28);--mark:rgba(255,210,63,.32);
-  --glow1:rgba(111,141,255,.18);--glow2:rgba(255,143,168,.09);--card-sh:rgba(0,0,0,.3);
-  --sky1:#131b4f;--sky2:#3b2f6e;--hill1:#33489a;--hill2:#27397f;--hill3:#1d2c68;--grass:#2c6b58;--wall:#26305f;--roof:#d8624a;--sun:#ffe08a;--blossom:#c9708d;--cloud:#35418a;
-  --pbar:#26306a;--primary:#4a6bff;--primary-h:#5f7dff;--shadow:0 1px 0 rgba(0,0,0,.2),0 8px 20px var(--card-sh);color-scheme:dark}
+  --bg:#11181a;--grid:rgba(242,244,234,.07);--paper:#1a2326;--ink:#eceee6;--muted:#9da8aa;--line:#2f3b3e;--rule:#4d5a5e;--edge:#5d6b70;
+  --board:#1c3a31;--board2:#152c25;--tray:#7a5327;--tray2:#54381a;
+  --brick:#ff9076;--brick-soft:#3c211b;--primary:#c4432b;--primary-h:#d5543b;--primary-d:#7f2716;
+  --note:#4f4312;--hl:rgba(255,216,77,.26);--goldink:#ffe08a;
+  --good:#5fd3a0;--good-soft:#16352a;--bad:#ff9076;--bad-soft:#3c211b;--orange:#ffb45e;--field:#141c1e;--warm:#ffb45e;
+  --sky1:#10202a;--sky2:#1d3330;--hill1:#2c4a45;--hill2:#223b38;--hill3:#18302c;--grass:#244a3a;--bk:#8f3b2b;--bk2:#742e21;--trim:#cfd3c8;--roof:#20282f;--win:#ffd84d;--sun:#f5e7a6;--cloud:#2c4046;--track:#7d3a2b;
+  --pbar:#2a3538;--shadow:0 1px 0 var(--line),0 10px 22px -12px rgba(0,0,0,.6);color-scheme:dark}
 *{box-sizing:border-box;touch-action:pan-x pan-y;-webkit-tap-highlight-color:transparent}
 [hidden]{display:none!important}
 button{-webkit-user-select:none;user-select:none}
 html,body{touch-action:pan-x pan-y;margin:0;color:var(--ink);-webkit-text-size-adjust:100%}
-body{min-height:100vh;min-height:100dvh;background-color:var(--bg);
-  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:26px 26px;
+/* 頁面底：公佈欄的洞洞板 */
+body{min-height:100vh;min-height:100dvh;background-color:var(--bg);background-image:radial-gradient(var(--grid) 1px,transparent 1.4px);background-size:22px 22px;
   font:16px/1.7 "PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;padding-bottom:env(safe-area-inset-bottom)}
-/* 午後陽光：右上暖黃、左側櫻花粉，固定在視窗上 */
-body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
-  background:radial-gradient(70% 42% at 100% 0,var(--glow1),transparent 72%),radial-gradient(60% 36% at 0 38%,var(--glow2),transparent 72%)}
 button,input,select,textarea{font:inherit;color:inherit}
-:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
-.num,.chips b,.stat em,.big,.step b,h1,h2,h3,.hud-phase,.btn.primary,.result-tier{font-family:var(--round)}
+:focus-visible{outline:3px solid var(--brick);outline-offset:2px}
+#hud :focus-visible{outline-color:var(--yellow)}
+svg.i{width:1em;height:1em;fill:currentColor;vertical-align:-.14em;flex:none}
+.num,.chips b,.stat em,.big,.step b,table.g td.r{font-family:var(--num)}
 
-/* ---------- 狀態列 ---------- */
-#hud{position:sticky;top:0;z-index:5;background:var(--paper);border-bottom:2px solid var(--edge);box-shadow:0 4px 0 var(--mark);padding-top:env(safe-area-inset-top)}
-.hud-in{max-width:600px;margin:0 auto;padding:8px 14px 10px}
-.hud-top{display:flex;align-items:center;gap:8px}
-.season{flex:none;display:grid;place-items:center;width:36px;height:36px;font-size:19px;line-height:1;background:var(--note);border:2px solid var(--edge);border-radius:12px;transform:rotate(-5deg);box-shadow:0 2px 0 var(--edge)}
-.hud-phase{font-weight:900;font-size:18px;letter-spacing:.02em;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.hud-btn{background:var(--blue-soft);border:2px solid var(--edge);border-radius:12px;min-height:38px;padding:0 12px;color:var(--ink);cursor:pointer;font-size:14px;font-weight:700;box-shadow:0 2px 0 var(--edge);transition:transform .12s,box-shadow .12s,background-color .2s}
-.hud-btn:active{transform:translateY(2px);box-shadow:none}
-.prog{position:relative;height:12px;background:var(--pbar);border:2px solid var(--edge);border-radius:999px;margin:10px 0 9px;overflow:hidden}
-.prog i{display:block;height:100%;background:repeating-linear-gradient(-45deg,var(--yellow) 0 7px,#ffe38a 7px 14px);border-right:2px solid var(--edge);transition:width .45s cubic-bezier(.3,1.4,.5,1)}
-.prog::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent calc(25% - 1px),var(--edge) calc(25% - 1px) 25%,transparent 25%,transparent calc(50% - 1px),var(--edge) calc(50% - 1px) 50%,transparent 50%,transparent calc(75% - 1px),var(--edge) calc(75% - 1px) 75%,transparent 75%);opacity:.45;pointer-events:none}
+/* ---------- 狀態列：教室黑板，底下是木頭粉筆槽 ---------- */
+#hud{position:sticky;top:0;z-index:5;color:var(--chalk);
+  background:radial-gradient(120% 90% at 8% 0,rgba(255,255,255,.08),transparent 60%),radial-gradient(90% 80% at 96% 100%,rgba(255,255,255,.05),transparent 62%),var(--board);
+  border-bottom:6px solid var(--tray);box-shadow:0 1px 0 var(--tray2),0 8px 16px -8px rgba(28,36,48,.45);padding-top:env(safe-area-inset-top)}
+.hud-in{max-width:600px;margin:0 auto;padding:9px 14px 10px}
+.hud-top{display:flex;align-items:center;gap:9px}
+.season{flex:none;display:grid;place-items:center;width:34px;height:34px;border:1.5px solid var(--chalk-line);border-radius:50%;color:var(--yellow);font-size:19px;line-height:1}
+.hud-phase{font-family:var(--kai);font-weight:800;font-size:20px;letter-spacing:.06em;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hud-btn{background:transparent;border:1.5px solid var(--chalk-line);border-radius:10px;min-height:38px;padding:0 12px;color:var(--chalk);cursor:pointer;font-size:14px;font-weight:700;transition:transform .12s,background-color .2s}
+.hud-btn:active{transform:translateY(1px);background:rgba(242,244,234,.16)}
+.prog{position:relative;height:8px;background:rgba(242,244,234,.16);border-radius:999px;margin:10px 0 9px;overflow:hidden}
+.prog i{display:block;height:100%;background:var(--yellow);border-radius:999px;transition:width .45s cubic-bezier(.3,1.4,.5,1)}
+.prog::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent calc(25% - 1px),var(--board2) calc(25% - 1px) calc(25% + 1px),transparent calc(25% + 1px),transparent calc(50% - 1px),var(--board2) calc(50% - 1px) calc(50% + 1px),transparent calc(50% + 1px),transparent calc(75% - 1px),var(--board2) calc(75% - 1px) calc(75% + 1px),transparent calc(75% + 1px));pointer-events:none}
 .chips{display:flex;gap:6px;overflow-x:auto;white-space:nowrap;margin:0 -14px;padding:2px 14px 4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .chips::-webkit-scrollbar{display:none}
-.chips span{flex:none;display:inline-flex;align-items:center;gap:4px;background:var(--field);border:1.5px solid var(--line);border-radius:999px;padding:3px 10px;font-size:13px;color:var(--muted)}
-.chips b{font-weight:800;color:var(--ink);font-size:14px}
-.chips .ic{font-style:normal;font-size:14px}
-.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-top:6px;font-size:12px}
+.chips span{flex:none;display:inline-flex;align-items:center;gap:5px;background:rgba(242,244,234,.08);border:1px solid var(--chalk-line);border-radius:999px;padding:3px 10px;font-size:13px;color:var(--chalk-dim)}
+.chips b{font-weight:700;color:var(--chalk);font-size:15px;letter-spacing:.01em}
+.chips .ic{font-style:normal;display:inline-grid;font-size:15px;color:var(--chalk-dim)}
+.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;margin-top:6px;font-size:12px}
 .stat{display:grid;grid-template-columns:1fr auto;grid-template-areas:"n v" "b b";gap:1px 3px;align-items:end;min-width:0}
-.stat span{grid-area:n;font-weight:700}
-.stat em{grid-area:v;font-style:normal;font-weight:800;font-size:13px;font-variant-numeric:tabular-nums}
-.stat .bar{grid-area:b;height:7px;background:var(--pbar);border-radius:999px;overflow:hidden}
+.stat span{grid-area:n;font-weight:600;color:var(--chalk-dim)}
+.stat em{grid-area:v;font-style:normal;font-weight:700;font-size:14px;font-variant-numeric:tabular-nums;color:var(--chalk)}
+.stat .bar{grid-area:b;height:5px;background:rgba(242,244,234,.16);border-radius:999px;overflow:hidden}
 .stat .bar i{display:block;height:100%;border-radius:999px;background:var(--s1);transition:width .45s cubic-bezier(.3,1.4,.5,1)}
 .stat:nth-child(2) .bar i{background:var(--s2)}.stat:nth-child(3) .bar i{background:var(--s3)}
 .stat:nth-child(4) .bar i{background:var(--s4)}.stat:nth-child(5) .bar i{background:var(--s5)}.stat:nth-child(6) .bar i{background:var(--s6)}
 .hud-collapsed .stats{display:none}
 
-/* ---------- 版面 ---------- */
-main{max-width:600px;margin:0 auto;padding:20px 14px calc(72px + env(safe-area-inset-bottom))}
-.card{position:relative;background:var(--paper);border:2px solid var(--line);border-radius:20px;padding:20px 16px 18px;box-shadow:var(--shadow);margin-bottom:16px}
-/* 紙膠帶：每個畫面只貼在第一張卡片與便利貼上 */
-main>.card:first-child:not(.hero)::before,.tip::before{content:"";position:absolute;top:-11px;left:50%;width:88px;height:22px;margin-left:-44px;transform:rotate(-2.5deg);border-radius:2px;
-  background:repeating-linear-gradient(135deg,var(--tape) 0 6px,var(--tape2) 6px 12px);pointer-events:none}
-main>.card:first-child:not(.hero){margin-top:6px}
-h1{font-size:44px;line-height:1.15;margin:0 0 8px;letter-spacing:.06em;font-weight:900}
+/* ---------- 版面：釘在公佈欄上的紙 ---------- */
+main{max-width:600px;margin:0 auto;padding:22px 14px calc(72px + env(safe-area-inset-bottom))}
+.card{position:relative;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:22px 16px 18px;box-shadow:var(--shadow);margin-bottom:16px}
+/* 圖釘：每個畫面只釘在第一張紙與便利貼上 */
+main>.card:first-child:not(.hero)::before,.tip::before{content:"";position:absolute;top:-9px;left:50%;width:18px;height:18px;margin-left:-9px;border-radius:50%;
+  background:radial-gradient(circle at 36% 30%,#ff9a85 0 16%,var(--primary) 46%,var(--primary-d) 100%);box-shadow:0 3px 4px rgba(28,36,48,.32);pointer-events:none}
+main>.card:first-child:not(.hero){margin-top:4px}
+h1{font-size:44px;line-height:1.15;margin:0 0 8px;letter-spacing:.04em;font-weight:900}
 h2{font-size:23px;line-height:1.4;margin:0 0 12px;font-weight:900;letter-spacing:.01em;text-wrap:balance}
-.card>h2:first-child,.card>.muted+h2{display:inline;background:linear-gradient(transparent 58%,var(--hl) 58%);-webkit-box-decoration-break:clone;box-decoration-break:clone;padding:0 4px;margin-left:-4px}
+.card>h2:first-child,.card>.muted+h2{display:inline;background:linear-gradient(transparent 60%,var(--hl) 60%);-webkit-box-decoration-break:clone;box-decoration-break:clone;padding:0 4px;margin-left:-4px}
 .card>h2:first-child+*{margin-top:8px}
-h3{font-size:17px;margin:18px 0 8px;font-weight:800}
-h3::before{content:"";display:inline-block;width:6px;height:.95em;margin-right:8px;border-radius:3px;background:var(--pink);vertical-align:-.1em}
+h3{display:flex;align-items:center;gap:10px;font-size:16px;margin:20px 0 8px;font-weight:800}
+h3::after{content:"";flex:1;height:1.5px;background:var(--line)}
 p{margin:0 0 10px;text-wrap:pretty}
 .muted{color:var(--muted)}
 .small{font-size:14px}
-.tag{display:inline-block;font-size:12px;font-weight:700;line-height:1.5;padding:1px 8px;border-radius:6px;border:1.5px solid currentColor;background:var(--blue-soft);color:var(--blue);margin-right:4px;vertical-align:middle;transform:rotate(-2deg)}
-.tag.red{background:var(--bad-soft);color:var(--bad)}
-.tag.gold{background:var(--note);color:var(--goldink)}
+/* 標籤：橡皮章 */
+.tag{display:inline-block;font-size:12px;font-weight:800;line-height:1.5;padding:0 7px;border-radius:4px;border:1.5px solid currentColor;background:transparent;color:var(--muted);margin-right:4px;vertical-align:middle;letter-spacing:.04em}
+.tag.red{color:var(--bad)}
+.tag.gold{background:var(--note);color:var(--goldink);border-color:transparent}
+.ach-off{display:inline-block;width:.8em;height:.8em;border:1.5px solid var(--rule);border-radius:50%;vertical-align:-.05em}
 
-/* ---------- 貼紙按鈕 ---------- */
-.btn{display:block;width:100%;min-height:52px;text-align:left;background:var(--paper);border:2px solid var(--edge);border-radius:16px;padding:11px 14px;margin:10px 0;cursor:pointer;font-weight:600;box-shadow:0 3px 0 var(--edge);transition:transform .12s cubic-bezier(.3,1.6,.5,1),box-shadow .12s,background-color .2s}
+/* ---------- 按鈕 ---------- */
+.btn{display:block;width:100%;min-height:52px;text-align:left;background:var(--paper);border:1.5px solid var(--edge);border-radius:10px;padding:11px 14px;margin:10px 0;cursor:pointer;font-weight:600;box-shadow:0 3px 0 var(--edge);transition:transform .12s cubic-bezier(.3,1.6,.5,1),box-shadow .12s,background-color .2s}
 .btn:active{transform:translateY(3px);box-shadow:0 0 0 var(--edge)}
 .btn small{display:block;color:var(--muted);font-size:13px;font-weight:400;margin-top:2px;line-height:1.5}
-.btn.primary{background-color:var(--primary);background-image:linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,0) 55%);color:#fff;text-align:center;font-weight:900;font-size:17px;letter-spacing:.06em;position:sticky;bottom:calc(12px + env(safe-area-inset-bottom));z-index:3}
-.btn.ghost{text-align:center;color:var(--blue);background:transparent;border:2px dashed var(--line);box-shadow:none;font-weight:700}
-.btn.ghost:active{transform:none;background:var(--blue-soft)}
+.btn.primary{background:var(--primary);border-color:var(--primary-d);box-shadow:0 3px 0 var(--primary-d);color:#fff;text-align:center;font-weight:800;font-size:17px;letter-spacing:.08em;position:sticky;bottom:calc(12px + env(safe-area-inset-bottom));z-index:3}
+.btn.primary:active{box-shadow:0 0 0 var(--primary-d)}
+.btn.ghost{text-align:center;color:var(--brick);background:transparent;border:1.5px dashed var(--rule);box-shadow:none;font-weight:700}
+.btn.ghost:active{transform:none;background:var(--brick-soft)}
 .btn:disabled{opacity:.5;cursor:not-allowed;box-shadow:none;transform:none}
-.btn.primary:disabled{opacity:1;background:var(--pbar);color:var(--muted);border-color:var(--line)}
-.btn.rec{background:var(--yellow);color:#16204f}
+.btn.primary:disabled{opacity:1;background:var(--pbar);color:var(--muted);border-color:var(--rule)}
+.btn.rec{background:var(--yellow);color:#1c2430}
 .btn.rec small{color:#4a4520}
-/* 事件選項像考卷的選擇題：A、B、C、D */
+/* 事件選項：答案卡的 A、B、C、D，按下去像把圈塗滿 */
 .card{counter-reset:q}
 .btn[data-act="opt"]:not(.ghost),.btn[data-act="crisis"]{position:relative;padding-left:54px;counter-increment:q}
-.btn[data-act="opt"]:not(.ghost)::before,.btn[data-act="crisis"]::before{content:counter(q,upper-alpha);position:absolute;left:12px;top:10px;width:30px;height:30px;display:grid;place-items:center;border:2px solid var(--edge);border-radius:50%;background:var(--yellow);color:#16204f;font:900 15px/1 var(--round)}
-.btn[data-act="opt"]:nth-of-type(4n+2)::before,.btn[data-act="crisis"]:nth-of-type(4n+2)::before{background:#ffb3c7}
-.btn[data-act="opt"]:nth-of-type(4n+3)::before,.btn[data-act="crisis"]:nth-of-type(4n+3)::before{background:#9be8cf}
-.btn[data-act="opt"]:nth-of-type(4n)::before,.btn[data-act="crisis"]:nth-of-type(4n)::before{background:#a9d4ff}
+.btn[data-act="opt"]:not(.ghost)::before,.btn[data-act="crisis"]::before{content:counter(q,upper-alpha);position:absolute;left:12px;top:10px;width:30px;height:30px;display:grid;place-items:center;border:1.5px solid var(--edge);border-radius:50%;color:var(--ink);font:700 16px/1 var(--num);transition:background-color .15s,color .15s}
+.btn[data-act="opt"]:not(.ghost):active::before,.btn[data-act="crisis"]:active::before{background:var(--ink);color:var(--paper)}
 @media (hover:hover){
   .btn:not(:disabled):not(.ghost):hover{transform:translateY(-2px);box-shadow:0 5px 0 var(--edge)}
-  .btn:not(:disabled):not(.primary):not(.rec):hover{background-color:var(--blue-soft)}
-  .btn.primary:not(:disabled):hover{background-color:var(--primary-h)}
-  .btn:not(:disabled):active{transform:translateY(3px);box-shadow:0 0 0 var(--edge)}
-  .btn.ghost:active{transform:none}
-  .hud-btn:hover{background:var(--note)}
-  .opt:not(:disabled):not(.on):hover{border-color:var(--blue);background:var(--blue-soft)}
+  .btn.primary:not(:disabled):hover{background:var(--primary-h);box-shadow:0 5px 0 var(--primary-d)}
+  .btn:not(:disabled):not(.primary):not(.rec):hover{background-color:var(--field)}
+  .btn:not(:disabled):not(.ghost):active{transform:translateY(3px);box-shadow:0 0 0 var(--edge)}
+  .btn[data-act="opt"]:not(.ghost):hover::before,.btn[data-act="crisis"]:hover::before{background:var(--ink);color:var(--paper)}
+  .hud-btn:hover{background:rgba(242,244,234,.14)}
+  .opt:not(:disabled):not(.on):hover{border-color:var(--ink)}
   .step button:not(:disabled):hover{background:var(--note)}
 }
 .row{display:flex;gap:10px;flex-wrap:wrap}
 .row>*{flex:1;min-width:140px}
 label.f{display:block;font-size:14px;font-weight:700;color:var(--muted);margin:16px 0 6px}
-input[type=text],select,textarea{font-size:16px;width:100%;min-height:48px;padding:10px 12px;border:2px solid var(--edge);border-radius:12px;background:var(--field);transition:box-shadow .2s,background-color .2s}
-input[type=text]:focus,select:focus,textarea:focus{outline:none;background:var(--paper);box-shadow:0 0 0 4px var(--hl)}
+input[type=text],select,textarea{font-size:16px;width:100%;min-height:48px;padding:10px 12px;border:1.5px solid var(--rule);border-radius:8px;background:var(--field);transition:box-shadow .2s,border-color .2s,background-color .2s}
+input[type=text]:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink);background:var(--paper);box-shadow:0 0 0 4px var(--hl)}
+input::placeholder{color:var(--muted);opacity:1}
 select{appearance:none;-webkit-appearance:none;padding-right:36px;background-image:linear-gradient(45deg,transparent 50%,var(--ink) 50%),linear-gradient(135deg,var(--ink) 50%,transparent 50%);background-position:calc(100% - 20px) 50%,calc(100% - 14px) 50%;background-size:6px 6px;background-repeat:no-repeat}
 textarea{min-height:90px;font-size:13px;font-family:ui-monospace,Menlo,monospace}
 .opts{display:flex;flex-wrap:wrap;gap:8px}
-.opt{min-height:44px;border:2px solid var(--line);border-radius:999px;padding:6px 16px;background:var(--field);cursor:pointer;font-size:15px;font-weight:600;transition:transform .12s cubic-bezier(.3,1.6,.5,1),background-color .2s,border-color .2s}
+.opt{min-height:44px;border:1.5px solid var(--rule);border-radius:999px;padding:6px 16px;background:var(--paper);cursor:pointer;font-size:15px;font-weight:600;transition:transform .12s cubic-bezier(.3,1.6,.5,1),background-color .2s,border-color .2s,color .2s}
 .opt:active{transform:scale(.95)}
-.opt.on{border-color:var(--edge);background:var(--blue);color:#fff;font-weight:800;box-shadow:0 2px 0 var(--edge)}
+.opt.on{border-color:var(--ink);background:var(--ink);color:var(--paper);font-weight:800}
 .opt:disabled{opacity:.4}
 .alloc{display:grid;grid-template-columns:1fr auto;gap:10px 12px;align-items:center}
 .alloc .name{font-weight:700}
 .alloc .name small{display:block;color:var(--muted);font-size:12px;font-weight:400}
 .step{display:flex;align-items:center;gap:8px}
-.step button{width:44px;height:44px;border-radius:50%;border:2px solid var(--edge);background:var(--paper);cursor:pointer;font-size:20px;font-weight:800;line-height:1;box-shadow:0 2px 0 var(--edge);transition:transform .12s,box-shadow .12s,background-color .2s}
+.step button{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--edge);background:var(--paper);cursor:pointer;font-size:20px;font-weight:800;line-height:1;box-shadow:0 2px 0 var(--edge);transition:transform .12s,box-shadow .12s,background-color .2s}
 .step button:active{transform:translateY(2px);box-shadow:none}
 .step button:disabled{opacity:.35;box-shadow:none}
-.step b{min-width:30px;text-align:center;font-size:18px;font-variant-numeric:tabular-nums}
-.big{font-size:34px;font-weight:900;color:var(--blue);letter-spacing:-.01em}
+.step b{min-width:30px;text-align:center;font-size:20px;font-variant-numeric:tabular-nums}
+.big{font-size:36px;font-weight:700;color:var(--brick);letter-spacing:.01em;line-height:1.1}
 .fx{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-.fx span{font-size:13px;font-weight:700;padding:2px 10px;border-radius:8px;background:var(--good-soft);color:var(--good)}
+.fx span{font-size:13px;font-weight:700;padding:2px 10px;border-radius:999px;background:var(--good-soft);color:var(--good)}
 .fx span.neg{background:var(--bad-soft);color:var(--bad)}
-.result-tier{font-weight:900;font-size:20px}
+/* 判定結果：蓋在紙上的章 */
+.result-tier{display:inline-block;font:900 22px/1.4 var(--kai);letter-spacing:.16em;padding:2px 8px 2px 14px;border:2.5px solid currentColor;border-radius:6px;transform:rotate(-3deg);margin:6px 0 12px}
 .t2{color:var(--orange)}.t1{color:var(--good)}.t-1{color:var(--warm)}.t-2{color:var(--bad)}
+/* 成績單 */
 table.g{width:100%;border-collapse:collapse;font-size:14px}
-table.g td,table.g th{padding:8px 4px;border-bottom:1.5px dashed var(--line);text-align:left;vertical-align:top}
-table.g th{color:var(--muted);font-weight:600;white-space:nowrap}
-table.g td.r{text-align:right;font-variant-numeric:tabular-nums}
+table.g td,table.g th{padding:8px 4px;border-bottom:1px dashed var(--rule);text-align:left;vertical-align:top}
+table.g tr:last-child td{border-bottom:0}
+table.g th{color:var(--muted);font-weight:700;font-size:12px;letter-spacing:.08em;white-space:nowrap;border-bottom:1.5px solid var(--ink)}
+table.g td.r{text-align:right;font-variant-numeric:tabular-nums;font-size:15px}
 .pbar{height:10px;background:var(--pbar);border-radius:999px;overflow:hidden;margin-top:6px}
 .pbar i{display:block;height:100%;background:var(--good);border-radius:999px}
-.share img{width:100%;border-radius:14px;border:2px solid var(--edge);display:block;box-shadow:0 4px 0 var(--edge)}
+.share img{width:100%;border-radius:8px;border:1px solid var(--line);display:block;box-shadow:var(--shadow)}
 details summary{cursor:pointer;min-height:40px;display:flex;align-items:center}
 ul{line-height:1.6}
 
-/* ---------- 首頁插畫 ---------- */
-.hero{background:linear-gradient(180deg,var(--sky1) 0%,var(--sky2) 74%);border:2px solid var(--edge);border-radius:22px;padding:46px 16px 0;overflow:hidden;box-shadow:0 5px 0 var(--edge)}
-.bunting{position:absolute;top:0;left:0;width:100%;height:36px;display:block}
-.eyebrow{margin:0 0 2px;font:800 12px/1.6 var(--round);letter-spacing:.14em;color:var(--ink);opacity:.72}
-.hero h1{display:inline-block;color:var(--ink);text-shadow:3px 3px 0 var(--paper);background:linear-gradient(transparent 64%,var(--mark) 64% 92%,transparent 92%);padding:0 6px;margin-left:-6px}
-.hero p{color:var(--ink);max-width:30em}
-.hero .small{opacity:.8}
-.sticker{position:absolute;top:44px;right:14px;width:54px;height:54px;display:grid;place-items:center;text-align:center;background:#ff9db3;color:#16204f;border:2px solid var(--edge);border-radius:16px;box-shadow:0 3px 0 var(--edge);font:900 14px/1.2 var(--round);letter-spacing:.06em;transform:rotate(9deg)}
-.hero-art{display:block;width:calc(100% + 32px);margin:10px -16px 0;height:auto}
-.hero-art .cloud{animation:drift 14s ease-in-out infinite alternate}
-.hero-art .cloud.b{animation-duration:19s;animation-direction:alternate-reverse}
-.hero-art .gondola{transform:translate(104px,89px);animation:ride 20s ease-in-out infinite alternate}
-.hero-art .petal{opacity:0;transform-box:fill-box;transform-origin:center;animation:fall 9s linear infinite}
-.hero-art .petal:nth-of-type(2){animation-delay:-2.2s;animation-duration:11s}
-.hero-art .petal:nth-of-type(3){animation-delay:-4.6s}
-.hero-art .petal:nth-of-type(4){animation-delay:-6.1s;animation-duration:12s}
-.hero-art .petal:nth-of-type(5){animation-delay:-7.8s;animation-duration:10s}
+/* ---------- 首頁：校門口的海報 ---------- */
+.hero{background:linear-gradient(180deg,var(--sky1) 0%,var(--sky2) 70%);border:0;padding:26px 16px 0;overflow:hidden}
+.eyebrow{margin:0 0 4px;font:700 13px/1.6 var(--num);letter-spacing:.2em;color:var(--ink);opacity:.7}
+.hero h1{color:var(--ink)}
+.hero h1::after{content:"";display:block;width:56px;height:5px;margin-top:12px;background:var(--primary)}
+.hero p{color:var(--ink);max-width:19em}
+.hero .small{opacity:.75}
+.stamp{position:absolute;top:22px;right:14px;width:80px;height:80px;display:grid;place-items:center;text-align:center;border:2.5px solid var(--brick);border-radius:50%;color:var(--brick);font:800 13px/1.3 var(--kai);letter-spacing:0;transform:rotate(-12deg);opacity:.88;box-shadow:inset 0 0 0 3px var(--sky1),inset 0 0 0 4.5px var(--brick)}
+.hero-art{display:block;width:calc(100% + 32px);margin:6px -16px 0;height:auto}
+.hero-art .cloud{animation:drift 16s ease-in-out infinite alternate}
+.hero-art .cloud.b{animation-duration:22s;animation-direction:alternate-reverse}
+.hero-art .gondola{transform:translate(100px,94.6px);animation:ride 22s ease-in-out infinite alternate}
 @keyframes drift{to{transform:translateX(16px)}}
-@keyframes ride{from{transform:translate(60px,112.7px)}to{transform:translate(160px,59.5px)}}
-@keyframes fall{0%{transform:translate(0,-10px) rotate(0);opacity:0}12%{opacity:.95}85%{opacity:.9}100%{transform:translate(-46px,120px) rotate(260deg);opacity:0}}
+@keyframes ride{from{transform:translate(60px,121.5px)}to{transform:translate(138px,69px)}}
 .mountain{display:none}
 .foot{text-align:center;font-size:12px;color:var(--muted);margin-top:24px}
 
 /* ---------- 便利貼提示 ---------- */
-.tip{background:var(--note);border:0;border-radius:4px 4px 14px 4px;transform:rotate(-.6deg);box-shadow:0 2px 0 rgba(22,32,79,.12),0 8px 14px rgba(22,32,79,.1);color:var(--ink)}
+.tip{background:var(--note);border:0;border-radius:2px 2px 12px 2px;transform:rotate(-.6deg);box-shadow:0 2px 0 rgba(28,36,48,.1),0 10px 16px -8px rgba(28,36,48,.3);color:var(--ink)}
 .tip .x{float:right;border:0;background:none;color:var(--goldink);cursor:pointer;font-size:13px;font-weight:700;min-height:32px}
 .theme{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
 
-/* ---------- 換頁進場：卡片依序浮上來 ---------- */
-.enter>*{animation:rise .46s cubic-bezier(.2,.9,.3,1.25) backwards}
+/* ---------- 換頁進場：紙張依序貼上來 ---------- */
+.enter>*{animation:rise .42s cubic-bezier(.2,.9,.3,1.2) backwards}
 .enter>:nth-child(2){animation-delay:.06s}.enter>:nth-child(3){animation-delay:.12s}.enter>:nth-child(4){animation-delay:.18s}.enter>:nth-child(n+5){animation-delay:.24s}
 @keyframes rise{from{opacity:0;transform:translateY(16px)}}
 
 /* ---------- 底部彈出面板 ---------- */
-.panel{position:fixed;inset:0;background:rgba(13,18,48,.55);display:flex;align-items:flex-end;justify-content:center;z-index:20}
-.panel .card{position:relative;width:100%;max-width:600px;margin:0;border-radius:24px 24px 0 0;border-width:2px 2px 0;border-color:var(--edge);max-height:85vh;max-height:85dvh;overflow:auto;padding:26px 16px calc(18px + env(safe-area-inset-bottom));animation:sheet .28s cubic-bezier(.2,.9,.3,1.1)}
-.panel .card::before{content:"";position:absolute;top:9px;left:50%;width:44px;height:5px;margin-left:-22px;border-radius:3px;background:var(--line)}
+.panel{position:fixed;inset:0;background:rgba(17,24,26,.6);display:flex;align-items:flex-end;justify-content:center;z-index:20}
+.panel .card{position:relative;width:100%;max-width:600px;margin:0;border-radius:16px 16px 0 0;border-width:1px 1px 0;max-height:85vh;max-height:85dvh;overflow:auto;padding:28px 16px calc(18px + env(safe-area-inset-bottom));animation:sheet .28s cubic-bezier(.2,.9,.3,1.1)}
+.panel .card::before{content:"";position:absolute;top:10px;left:50%;width:44px;height:5px;margin-left:-22px;border-radius:3px;background:var(--rule)}
 @keyframes sheet{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
-.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:var(--paper);font-weight:700;padding:10px 18px;border-radius:999px;z-index:30;border:2px solid var(--edge);box-shadow:0 3px 0 var(--mark);animation:pop .3s cubic-bezier(.3,1.5,.5,1) backwards}
+/* 提示訊息：小黑板 */
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translateX(-50%);max-width:calc(100% - 28px);background:var(--board);color:var(--chalk);font-weight:700;padding:10px 18px;border-radius:8px;z-index:30;border-bottom:4px solid var(--tray);box-shadow:0 10px 20px -8px rgba(28,36,48,.5);animation:pop .3s cubic-bezier(.3,1.5,.5,1) backwards}
 @keyframes pop{from{opacity:0;transform:translateX(-50%) translateY(12px) scale(.92)}}
-@media (min-width:640px){.panel{align-items:center}.panel .card{border-radius:22px;border-width:2px}.panel .card::before{display:none}}
-@media (max-width:380px){h1{font-size:36px}.stat span{font-size:11px}.sticker{width:48px;height:48px;font-size:13px}}
+@media (min-width:640px){.panel{align-items:center}.panel .card{border-radius:8px;border-width:1px}.panel .card::before{display:none}}
+@media (max-width:380px){h1{font-size:36px}.stat span{font-size:11px}.stamp{width:66px;height:66px;font-size:12px}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -1172,7 +1175,7 @@ function achEvaluate(){if(S.achNew)return S.achNew;const st=achStore();st.runs++
  const now=[];ACHS.forEach(a=>{let ok=false;try{ok=a[3](S,st);}catch(e){}if(ok&&!st.u[a[0]]){st.u[a[0]]=new Date().toISOString().slice(0,10);now.push(a[0]);}});achSave(st);S.achNew=now;return now;}
 function openAch(){const st=achStore(),n=Object.keys(st.u).length;const cats=[...new Set(ACHS.map(a=>a[1]))];
  $('#panel').innerHTML=`<div class="panel" data-act="closeMenu"><div class="card" data-stop="1" style="max-height:85vh;overflow:auto"><h2>成就牆 ${n}／${ACHS.length}</h2><p class="muted small">已玩 ${st.runs} 局。成就存在這台裝置的瀏覽器裡，換裝置前可以先匯出。</p>
- ${cats.map(c=>`<h3>${c}</h3>${ACHS.filter(a=>a[1]===c).map(a=>{const u=st.u[a[0]];return `<p class="small" style="margin:6px 0">${u?'🏅':'▫️'} <b>${u||!a[4]?esc(a[0]):'？？？'}</b>${u||!a[4]?`・${esc(a[2])}`:'・隱藏成就'}${u?` <span class="muted">（${u}）</span>`:''}</p>`;}).join('')}`).join('')}
+ ${cats.map(c=>`<h3>${c}</h3>${ACHS.filter(a=>a[1]===c).map(a=>{const u=st.u[a[0]];return `<p class="small" style="margin:6px 0">${u?ico('medal'):'<i class="ach-off"></i>'} <b>${u||!a[4]?esc(a[0]):'？？？'}</b>${u||!a[4]?`・${esc(a[2])}`:'・隱藏成就'}${u?` <span class="muted">（${u}）</span>`:''}</p>`;}).join('')}`).join('')}
  <button class="btn" data-act="achExport">複製成就碼（匯出）</button><textarea id="f-ach" placeholder="貼上成就碼後按匯入"></textarea><button class="btn ghost" data-act="achImport">匯入成就碼</button><button class="btn ghost" data-act="closeMenu">關閉</button></div></div>`;}
 /* ================= Seed 對照：分享連結帶上自己的結算摘要 ================= */
 function cmpSummary(){const c=S.career||{};return{n:S.name,d:S.college+S.dept,c:c.name,o:c.outcome,g:Math.round(avgGpa()*100)/100,l:S.proposal&&S.proposal.ok?'求婚成功':S.flags.includes('交往')&&S.npc.cr?'交往中':'單身',t:(S.sub.titlesCache||computeTitles()).slice(0,3),x:S.ex.accepted?S.ex.city:'',y:S.delayed?5:4};}
@@ -1224,18 +1227,38 @@ function summary(){const top=BASE5.slice().sort((a,b)=>S.st[b]-S.st[a])[0];const
 function topNpc(){const arr=[['rm',HOUSING[S.housing].dorm?'室友':'好友'],['sr',S.srMale?'學長':'學姐'],['pf','教授'],['cr',S.proposal&&S.proposal.ok?'未婚'+(S.npc.pr==='她'?'妻':'夫'):S.flags.includes('交往')?'戀人':'曖昧對象']].filter(([k])=>S.npc[k]).map(([k,l])=>({n:S.npc[k],l,v:S.rel[k]||0}));return arr.sort((a,b)=>b.v-a.v)[0];}
 
 /* ================= 畫面 ================= */
-function seasonIcon(l){return /寒假/.test(l)?'❄️':/暑假/.test(l)?'☀️':/上學期/.test(l)?'🍂':/下學期/.test(l)?'🌸':/海外/.test(l)?'✈️':'🎓';}
-function moodIcon(v){return v>=65?'😄':v>=35?'🙂':'😣';}
+/* Phosphor Icons (bold), MIT License, https://phosphoricons.com */
+const ICON={'snowflake':'<path d="M227.65,149.14a12,12,0,0,1-8.79,14.51l-20.67,5.08,5.4,20.16a12,12,0,0,1-23.18,6.22l-7.29-27.2L140,148.78V187l20.48,20.48a12,12,0,0,1-17,17L128,209l-15.51,15.52a12,12,0,0,1-17-17L116,187V148.78L82.88,167.91l-7.29,27.2a12,12,0,0,1-23.18-6.22l5.4-20.16-20.67-5.08a12,12,0,1,1,5.72-23.3l27.89,6.85L104,128,70.75,108.8l-27.89,6.85A11.8,11.8,0,0,1,40,116a12,12,0,0,1-2.85-23.65l20.67-5.08-5.4-20.16a12,12,0,0,1,23.18-6.22l7.29,27.2L116,107.21V69L95.52,48.48a12,12,0,0,1,17-17L128,47l15.51-15.52a12,12,0,1,1,17,17L140,69v38.24l33.12-19.12,7.29-27.2a12,12,0,0,1,23.18,6.22l-5.4,20.16,20.67,5.08A12,12,0,0,1,216,116a11.8,11.8,0,0,1-2.87-.35l-27.89-6.85L152,128l33.25,19.2,27.89-6.85A12,12,0,0,1,227.65,149.14Z"/>',
+'sun':'<path d="M116,36V20a12,12,0,0,1,24,0V36a12,12,0,0,1-24,0Zm80,92a68,68,0,1,1-68-68A68.07,68.07,0,0,1,196,128Zm-24,0a44,44,0,1,0-44,44A44.05,44.05,0,0,0,172,128ZM51.51,68.49a12,12,0,1,0,17-17l-12-12a12,12,0,0,0-17,17Zm0,119-12,12a12,12,0,0,0,17,17l12-12a12,12,0,1,0-17-17ZM196,72a12,12,0,0,0,8.49-3.51l12-12a12,12,0,0,0-17-17l-12,12A12,12,0,0,0,196,72Zm8.49,115.51a12,12,0,0,0-17,17l12,12a12,12,0,0,0,17-17ZM48,128a12,12,0,0,0-12-12H20a12,12,0,0,0,0,24H36A12,12,0,0,0,48,128Zm80,80a12,12,0,0,0-12,12v16a12,12,0,0,0,24,0V220A12,12,0,0,0,128,208Zm108-92H220a12,12,0,0,0,0,24h16a12,12,0,0,0,0-24Z"/>',
+'leaf':'<path d="M227.42,39.86a12,12,0,0,0-11.28-11.28c-39.6-2.33-74.59,2.34-104,13.87C84,53.48,62.31,70.58,49.39,91.9c-17.62,29.11-17.66,64.45-.45,98.19L31.51,207.52a12,12,0,0,0,17,17l17.43-17.43c16.74,8.54,33.88,12.85,50.45,12.85a91.31,91.31,0,0,0,47.74-13.3c21.32-12.92,38.42-34.62,49.45-62.75C225.08,114.46,229.75,79.46,227.42,39.86ZM151.66,186.08C131.57,198.25,108,199.17,83.94,189l84.54-84.54a12,12,0,1,0-17-17L67,172.06c-10.14-24-9.22-47.63,3-67.72,20.91-34.53,70.54-53.72,134-52.25C205.38,115.53,186.19,165.17,151.66,186.08Z"/>',
+'flower':'<path d="M215.64,128a44,44,0,0,0-43.82-75.9,44,44,0,0,0-87.64,0A44,44,0,0,0,40.36,128a44,44,0,0,0,43.82,75.89,44,44,0,0,0,87.64,0A44,44,0,0,0,215.64,128ZM108,128a20,20,0,1,1,20,20A20,20,0,0,1,108,128Zm72.35-53.32a20,20,0,1,1,20,34.64c-2.65,1.53-10.52,4.88-30.1,6.42a44.08,44.08,0,0,0-10.52-18.18C170.86,81.36,177.7,76.21,180.35,74.68ZM128,36a20,20,0,0,1,20,20c0,3.06-1,11.55-9.49,29.28a43.79,43.79,0,0,0-21,0C109,67.55,108,59.06,108,56A20,20,0,0,1,128,36ZM48.33,82a20,20,0,0,1,27.32-7.32c2.65,1.53,9.49,6.68,20.62,22.88a44.08,44.08,0,0,0-10.52,18.18c-19.58-1.54-27.45-4.89-30.1-6.42A20,20,0,0,1,48.33,82Zm27.32,99.32a20,20,0,1,1-20-34.64c2.65-1.53,10.52-4.88,30.1-6.42a44.08,44.08,0,0,0,10.52,18.18C85.14,174.64,78.3,179.79,75.65,181.32ZM128,220a20,20,0,0,1-20-20c0-3.06,1-11.55,9.49-29.28a43.79,43.79,0,0,0,21,0C147,188.45,148,196.94,148,200A20,20,0,0,1,128,220Zm79.67-46a20,20,0,0,1-27.32,7.32c-2.65-1.53-9.49-6.68-20.62-22.88a44.08,44.08,0,0,0,10.52-18.18c19.58,1.54,27.45,4.89,30.1,6.42A20,20,0,0,1,207.67,174Z"/>',
+'airplane-tilt':'<path d="M190,115.31,217.21,89.7l.26-.26a36,36,0,0,0-50.91-50.91c-.09.08-.17.17-.26.26L140.69,66,60.1,36.71A12,12,0,0,0,47.52,39.5l-24,24A12,12,0,0,0,25.34,82l59.83,39.88L75,132H56a12,12,0,0,0-8.48,3.51l-24,24a12,12,0,0,0,4,19.62l35.23,14.1,14.06,35.14.09.22a12,12,0,0,0,19.76,3.7l23.81-23.81A12,12,0,0,0,124,200V181l10.13-10.13L174,230.65a12,12,0,0,0,18.47,1.83l24-24a12,12,0,0,0,2.79-12.59Zm-4.11,89.85L146,145.33a12,12,0,0,0-8.8-5.28A11.66,11.66,0,0,0,136,140a12,12,0,0,0-8.49,3.52l-24,24A12,12,0,0,0,100,176v19l-7.62,7.62-9.24-23.1a12,12,0,0,0-6.69-6.69l-23.1-9.24L61,156H80a12,12,0,0,0,8.48-3.51l24-24A12,12,0,0,0,110.66,110L50.84,70.12l8.24-8.25,80.83,29.39a12,12,0,0,0,12.84-3.05l30.89-32.82a12,12,0,0,1,17,17l-32.82,30.89a12,12,0,0,0-3.06,12.84l29.4,80.82Z"/>',
+'graduation-cap':'<path d="M249.8,85.49l-116-64a12,12,0,0,0-11.6,0l-116,64a12,12,0,0,0,0,21l21.8,12v47.76a19.89,19.89,0,0,0,5.09,13.32C46.63,194.7,77,220,128,220a136.88,136.88,0,0,0,40-5.75V240a12,12,0,0,0,24,0V204.12a119.53,119.53,0,0,0,30.91-24.51A19.89,19.89,0,0,0,228,166.29V118.53l21.8-12a12,12,0,0,0,0-21ZM128,45.71,219.16,96,186,114.3a1.88,1.88,0,0,1-.18-.12l-52-28.69a12,12,0,0,0-11.6,21l39,21.49L128,146.3,36.84,96ZM128,196c-40.42,0-64.65-19.07-76-31.27v-33l70.2,38.74a12,12,0,0,0,11.6,0L168,151.64v37.23A110.46,110.46,0,0,1,128,196Zm76-31.27a93.21,93.21,0,0,1-12,10.81V138.39l12-6.62Z"/>',
+'backpack':'<path d="M172,48.55V36A28,28,0,0,0,144,8H112A28,28,0,0,0,84,36V48.55A60.08,60.08,0,0,0,32,108V220a20,20,0,0,0,20,20H204a20,20,0,0,0,20-20V108A60.08,60.08,0,0,0,172,48.55ZM112,32h32a4,4,0,0,1,4,4V48H108V36A4,4,0,0,1,112,32Zm48,128H96v-8a4,4,0,0,1,4-4h56a4,4,0,0,1,4,4ZM96,184h64v32H96Zm104,32H184V152a28,28,0,0,0-28-28H100a28,28,0,0,0-28,28v64H56V108A36,36,0,0,1,92,72h72a36,36,0,0,1,36,36ZM160,100a12,12,0,0,1-12,12H108a12,12,0,0,1,0-24h40A12,12,0,0,1,160,100Z"/>',
+'smiley':'<path d="M178.39,158c-11,19.06-29.39,30-50.39,30s-39.36-10.93-50.39-30a12,12,0,0,1,20.78-12c3.89,6.73,12.91,18,29.61,18s25.72-11.28,29.61-18a12,12,0,1,1,20.78,12ZM236,128A108,108,0,1,1,128,20,108.12,108.12,0,0,1,236,128Zm-24,0a84,84,0,1,0-84,84A84.09,84.09,0,0,0,212,128ZM92,124a16,16,0,1,0-16-16A16,16,0,0,0,92,124Zm72-32a16,16,0,1,0,16,16A16,16,0,0,0,164,92Z"/>',
+'smiley-meh':'<path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,192a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212Zm52-52a12,12,0,0,1-12,12H88a12,12,0,0,1,0-24h80A12,12,0,0,1,180,160ZM76,108a16,16,0,1,1,16,16A16,16,0,0,1,76,108Zm104,0a16,16,0,1,1-16-16A16,16,0,0,1,180,108Z"/>',
+'smiley-sad':'<path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,192a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212ZM76,108a16,16,0,1,1,16,16A16,16,0,0,1,76,108Zm104,0a16,16,0,1,1-16-16A16,16,0,0,1,180,108Zm-3.26,57a12,12,0,0,1-19.48,14,36,36,0,0,0-58.52,0,12,12,0,0,1-19.48-14,60,60,0,0,1,97.48,0Z"/>',
+'coins':'<path d="M188,86.11V84c0-14.62-10.83-27.55-30.51-36.4C140.87,40.12,119,36,96,36S51.13,40.12,34.51,47.6C14.83,56.45,4,69.38,4,84v40c0,14.62,10.83,27.55,30.51,36.4A131.67,131.67,0,0,0,68,169.88V172c0,14.62,10.83,27.55,30.51,36.4C115.13,215.88,137,220,160,220s44.87-4.12,61.49-11.6C241.17,199.55,252,186.62,252,172V132C252,109.86,226.71,92.08,188,86.11ZM228,132c0,7.75-21.77,22.48-61.81,23.88C180.33,147.4,188,136.3,188,124V110.44C213.88,115.15,228,125.48,228,132ZM107.37,147.63c-3.63.24-7.42.37-11.37.37-5.08,0-9.89-.22-14.43-.61a10.94,10.94,0,0,0-1.14-.09c-1.51-.14-3-.3-4.43-.48V130.93A187,187,0,0,0,96,132a187,187,0,0,0,20-1.07v15.89c-2.49.3-5.07.56-7.75.75C108,147.58,107.66,147.6,107.37,147.63ZM164,117.14V124c0,4.78-8.28,12.21-24,17.54v-15a115.32,115.32,0,0,0,17.49-6.13Q160.93,118.86,164,117.14ZM96,60c44,0,68,15.85,68,24s-24,24-68,24S28,92.15,28,84,52,60,96,60ZM28,124v-6.86q3.08,1.71,6.51,3.26A115.32,115.32,0,0,0,52,126.53v15C36.28,136.21,28,128.78,28,124Zm64,48v0c1.33,0,2.66,0,4,0q5.44,0,10.77-.32,4.45,1.57,9.23,2.86v15C100.28,184.21,92,176.78,92,172Zm48,22.82V178.94A186.45,186.45,0,0,0,160,180a187,187,0,0,0,20-1.07v15.89a170.08,170.08,0,0,1-40,0Zm64-5.28v-15a115.32,115.32,0,0,0,17.49-6.13q3.44-1.54,6.51-3.26V172C228,176.78,219.72,184.21,204,189.54Z"/>',
+'books':'<path d="M235.57,193.73,202.38,35.93a20,20,0,0,0-23.76-15.48L131.81,30.51a19.82,19.82,0,0,0-11,6.65A20,20,0,0,0,104,28H56A20,20,0,0,0,36,48V208a20,20,0,0,0,20,20h48a20,20,0,0,0,20-20V90.25l25.62,121.82A20,20,0,0,0,169.15,228a20.27,20.27,0,0,0,4.23-.45l46.81-10.06A20.1,20.1,0,0,0,235.57,193.73ZM148.19,88.65l39-8.38,2.53,12-39,8.38Zm7.46,35.5,39-8.38,9.16,43.58-39,8.38Zm24.06-79.39,2.53,12-39,8.38-2.53-12ZM60,88h40v80H60Zm40-36V64H60V52ZM60,204V192h40v12Zm112.29-.76-2.53-12,39-8.38,2.53,12Z"/>',
+'clipboard-text':'<path d="M172,164a12,12,0,0,1-12,12H96a12,12,0,0,1,0-24h64A12,12,0,0,1,172,164Zm-12-52H96a12,12,0,0,0,0,24h64a12,12,0,0,0,0-24Zm60-64V216a20,20,0,0,1-20,20H56a20,20,0,0,1-20-20V48A20,20,0,0,1,56,28H90.53a51.88,51.88,0,0,1,74.94,0H200A20,20,0,0,1,220,48ZM100.29,60h55.42a28,28,0,0,0-55.42,0ZM196,52H178.59A52.13,52.13,0,0,1,180,64v8a12,12,0,0,1-12,12H88A12,12,0,0,1,76,72V64a52.13,52.13,0,0,1,1.41-12H60V212H196Z"/>',
+'chart-line-up':'<path d="M236,208a12,12,0,0,1-12,12H32a12,12,0,0,1-12-12V48a12,12,0,0,1,24,0v99l43.51-43.52a12,12,0,0,1,17,0L128,127l43-43H160a12,12,0,0,1,0-24h40a12,12,0,0,1,12,12v40a12,12,0,0,1-24,0V101l-51.51,51.52a12,12,0,0,1-17,0L96,129,44,181v15H224A12,12,0,0,1,236,208Z"/>',
+'translate':'<path d="M250.73,210.63l-56-112a12,12,0,0,0-21.46,0l-20.52,41A84.2,84.2,0,0,1,114,126.22,107.48,107.48,0,0,0,139.33,68H160a12,12,0,0,0,0-24H108V32a12,12,0,0,0-24,0V44H32a12,12,0,0,0,0,24h83.13A83.69,83.69,0,0,1,96,110.35,84,84,0,0,1,83.6,91a12,12,0,1,0-21.81,10A107.55,107.55,0,0,0,78,126.24,83.54,83.54,0,0,1,32,140a12,12,0,0,0,0,24,107.47,107.47,0,0,0,64-21.07,108.4,108.4,0,0,0,45.39,19.44l-24.13,48.26a12,12,0,1,0,21.46,10.73L151.41,196h65.17l12.68,25.36a12,12,0,1,0,21.47-10.73ZM163.41,172,184,130.83,204.58,172Z"/>',
+'globe-hemisphere-east':'<path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,24a83.57,83.57,0,0,1,44,12.48v16L151.79,96l-28.47,3.85L104.62,87.6a20,20,0,0,0-28.07,5.28l-20.94,31.3a19.89,19.89,0,0,0-3.38,11l-.16,28.69A84,84,0,0,1,128,44ZM68.41,187.14A20,20,0,0,0,76,171.55l.2-35,18.07-27,16.62,10.88a19.92,19.92,0,0,0,14.14,3.42l31.47-4.26A20,20,0,0,0,169,112.79L191.16,87a20.15,20.15,0,0,0,4.39-8.9,83.78,83.78,0,0,1,14.12,69.48l-11.34-10.37a20.08,20.08,0,0,0-21.17-3.71l-30.45,12.66a20.1,20.1,0,0,0-12.11,15.55l-2.39,16.2a20,20,0,0,0,14.71,22.26l16,4.18a83.78,83.78,0,0,1-94.47-17.24Zm116.77,2.32-1.63-1.63a20.05,20.05,0,0,0-9.08-5.22l-18-4.72L158,167.48l26-10.81L200,171.26A84.84,84.84,0,0,1,185.18,189.46Z"/>',
+'heart':'<path d="M178,36c-20.09,0-37.92,7.93-50,21.56C115.92,43.93,98.09,36,78,36a66.08,66.08,0,0,0-66,66c0,72.34,105.81,130.14,110.31,132.57a12,12,0,0,0,11.38,0C138.19,232.14,244,174.34,244,102A66.08,66.08,0,0,0,178,36Zm-5.49,142.36A328.69,328.69,0,0,1,128,210.16a328.69,328.69,0,0,1-44.51-31.8C61.82,159.77,36,131.42,36,102A42,42,0,0,1,78,60c17.8,0,32.7,9.4,38.89,24.54a12,12,0,0,0,22.22,0C145.3,69.4,160.2,60,178,60a42,42,0,0,1,42,42C220,131.42,194.18,159.77,172.51,178.36Z"/>',
+'medal':'<path d="M220,96A92,92,0,1,0,68,165.69V240a12,12,0,0,0,17.37,10.73L128,229.42l42.64,21.31A12,12,0,0,0,188,240V165.69A91.86,91.86,0,0,0,220,96ZM60,96a68,68,0,1,1,68,68A68.07,68.07,0,0,1,60,96ZM164,220.59l-30.64-15.32a12,12,0,0,0-10.74,0L92,220.58V180.66a92,92,0,0,0,72,0ZM128,148A52,52,0,1,0,76,96,52.06,52.06,0,0,0,128,148Zm0-80a28,28,0,1,1-28,28A28,28,0,0,1,128,68Z"/>'};
+function ico(n){return '<svg class="i" viewBox="0 0 256 256" aria-hidden="true">'+ICON[n]+'</svg>';}
+function seasonIcon(l){return ico(/寒假/.test(l)?'snowflake':/暑假/.test(l)?'sun':/上學期/.test(l)?'leaf':/下學期/.test(l)?'flower':/海外/.test(l)?'airplane-tilt':'graduation-cap');}
+function moodIcon(v){return ico(v>=65?'smiley':v>=35?'smiley-meh':'smiley-sad');}
 function renderHud(){const h=$('#hud');if(!S||['intro'].includes(S.step)&&!S.phases.length){h.hidden=true;return;}
  h.hidden=false;const p=cur();const total=S.phases.length;const pct=S.step==='result'?100:Math.round(S.pi/(total-1)*100);
  const collapsed=localStorageGet('zhinan-hud')==='c';
  h.className=collapsed?'hud-collapsed':'';
  const pl=S.step==='result'?'畢業結算':S.step==='intro'?'開學前':phaseLabel(p);
  const ic=(e,t)=>`<span><em class="ic">${e}</em>${t}</span>`;
- h.innerHTML=`<div class="hud-in"><div class="hud-top"><span class="season">${S.step==='result'?'🎓':S.step==='intro'?'🎒':seasonIcon(pl)}</span><div class="hud-phase">${esc(pl)}</div>
+ h.innerHTML=`<div class="hud-in"><div class="hud-top"><span class="season">${S.step==='result'?ico('graduation-cap'):S.step==='intro'?ico('backpack'):seasonIcon(pl)}</span><div class="hud-phase">${esc(pl)}</div>
  <button class="hud-btn" data-act="toggleHud">${collapsed?'能力':'收合'}</button><button class="hud-btn" data-act="menu">選單</button></div>
  <div class="prog"><i style="width:${pct}%"></i></div>
- <div class="chips">${ic(moodIcon(S.mood),`心情 <b>${S.mood}</b>`)}${ic('💰',`存款 <b>${S.money.toLocaleString()}</b>`)}${ic('📚',`學分 <b>${Math.floor(S.credits)}/${required()}</b>`)}${ic('📝',`必修 <b>${S.needReq?S.needReq.filter(n=>S.passed[n]).length+'/'+S.needReq.length:'—'}</b>`)}${ic('🎓',`GPA <b>${S.gpas.length?avgGpa().toFixed(2):'—'}</b>`)}${S.lang?ic('🗣️',`語檢 <b>${S.lang.toFixed(1)}</b>`):''}${S.flang?ic('🌐',`${FL_TESTS[S.flang.g].lang} <b>${flName(S.flang.g,S.flang.r)}</b>`):''}${S.flags&&S.flags.includes('交往')&&S.npc.cr?ic('💗',`${esc(S.npc.cr)} <b>${S.rel.cr}</b>`):''}</div>
+ <div class="chips">${ic(moodIcon(S.mood),`心情 <b>${S.mood}</b>`)}${ic(ico('coins'),`存款 <b>${S.money.toLocaleString()}</b>`)}${ic(ico('books'),`學分 <b>${Math.floor(S.credits)}/${required()}</b>`)}${ic(ico('clipboard-text'),`必修 <b>${S.needReq?S.needReq.filter(n=>S.passed[n]).length+'/'+S.needReq.length:'—'}</b>`)}${ic(ico('chart-line-up'),`GPA <b>${S.gpas.length?avgGpa().toFixed(2):'—'}</b>`)}${S.lang?ic(ico('translate'),`語檢 <b>${S.lang.toFixed(1)}</b>`):''}${S.flang?ic(ico('globe-hemisphere-east'),`${FL_TESTS[S.flang.g].lang} <b>${flName(S.flang.g,S.flang.r)}</b>`):''}${S.flags&&S.flags.includes('交往')&&S.npc.cr?ic(ico('heart'),`${esc(S.npc.cr)} <b>${S.rel.cr}</b>`):''}</div>
  <div class="stats">${STATS.map(k=>`<div class="stat"><span>${k}</span><div class="bar"><i style="width:${S.st[k]}%"></i></div><em>${Math.floor(S.st[k])}</em></div>`).join('')}</div></div>`;}
 function localStorageGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
 function localStorageSet(k,v){try{localStorage.setItem(k,v);}catch(e){}}
@@ -1287,39 +1310,34 @@ const VERSION_NOTES=['自己選課：每學期從可加選的選修裡勾選，�
  '結算新增人生年表、十年後的同學會番外；首頁新增成就牆（30 個成就，可匯出）；分享連結可以和朋友並排比較同一個 Seed 的人生'];
 function versionCard(){return `<div class="card small"><h3 style="margin-top:0">Version ${VERSION} 更新重點</h3><ul style="margin:0;padding-left:20px">${VERSION_NOTES.map(n=>`<li style="margin:4px 0">${esc(n)}</li>`).join('')}</ul></div>`;}
 function viewStart(){const sv=loadSave();const qs=new URLSearchParams(location.search).get('seed');const fc=urlCmp();const achN=Object.keys(achStore().u).length;
- return `<div class="card hero"><svg class="bunting" viewBox="0 0 360 36" preserveAspectRatio="none" aria-hidden="true">
-<path d="M-4 3 Q180 22 364 3" fill="none" stroke="var(--edge)" stroke-width="1.5"/>
-<g stroke="var(--edge)" stroke-width="1.5" stroke-linejoin="round">
-<path d="M14 5 L34 7 L23 25Z" fill="var(--roof)"/><path d="M52 8 L72 9.5 L61 28Z" fill="var(--yellow)"/><path d="M90 10.5 L110 11.5 L99 30Z" fill="var(--blossom)"/><path d="M128 12 L148 12.5 L138 31Z" fill="var(--blue)"/><path d="M170 12.5 L190 12.5 L180 31.5Z" fill="var(--grass)"/>
-<path d="M212 12.5 L232 12 L222 31Z" fill="var(--yellow)"/><path d="M250 11.5 L270 10.5 L261 30Z" fill="var(--roof)"/><path d="M288 9.5 L308 8 L299 28Z" fill="var(--blue)"/><path d="M326 7 L346 5 L337 25Z" fill="var(--blossom)"/></g></svg>
-<span class="sticker" aria-hidden="true">新生<br>報到</span><p class="eyebrow">Beneath Mount Zhinan</p><h1>指南山腳下</h1><p>${SCHOOL}四年人生模擬器。每學期分配時間、面對突發事件，畢業時決定你的人生方向。</p>
- <p class="small">相同 Seed ＋ 相同選擇 ＝ 相同人生</p><svg class="hero-art" viewBox="0 0 360 170" preserveAspectRatio="xMidYMax slice" role="img" aria-label="指南山腳下的校園：遠山、鐘塔、纜車與樹">
-<circle cx="296" cy="42" r="32" fill="var(--sun)" opacity=".28"/>
-<circle cx="296" cy="42" r="20" fill="var(--sun)" stroke="var(--edge)" stroke-width="2"/>
-<g class="cloud" fill="var(--cloud)" stroke="var(--edge)" stroke-width="2" stroke-linejoin="round"><path d="M22 34 a9 9 0 0 1 16 -6 a11 11 0 0 1 21 3 a7 7 0 0 1 2 14 h-38 a7.5 7.5 0 0 1 -1 -11Z"/></g>
-<g class="cloud b" fill="var(--cloud)" stroke="var(--edge)" stroke-width="2" stroke-linejoin="round"><path d="M212 70 a7 7 0 0 1 12 -4 a8 8 0 0 1 15 2 a5.5 5.5 0 0 1 1 11 h-27 a5.5 5.5 0 0 1 -1 -9Z"/></g>
-<path d="M0 150 L70 78 L112 112 L178 40 L262 128 L310 92 L360 130 L360 170 L0 170Z" fill="var(--hill1)" stroke="var(--edge)" stroke-width="2" stroke-linejoin="round"/>
-<path d="M0 160 L60 112 L120 150 L210 86 L300 150 L360 118 L360 170 L0 170Z" fill="var(--hill2)" stroke="var(--edge)" stroke-width="2" stroke-linejoin="round"/>
-<path d="M18 128 L176 44" stroke="var(--edge)" stroke-width="1.5" stroke-dasharray="3 3" fill="none"/>
-<g class="gondola"><line x1="0" y1="-7" x2="0" y2="0" stroke="var(--edge)" stroke-width="1.5"/><rect x="-9" y="0" width="18" height="12" rx="3" fill="var(--yellow)" stroke="var(--edge)" stroke-width="2"/></g>
-<rect x="0" y="146" width="360" height="24" fill="var(--grass)" stroke="var(--edge)" stroke-width="2"/>
-<g stroke="var(--edge)" stroke-width="2" stroke-linejoin="round">
-<rect x="132" y="118" width="96" height="34" fill="var(--wall)"/>
-<rect x="168" y="86" width="24" height="66" fill="var(--wall)"/>
-<path d="M164 86 L180 66 L196 86Z" fill="var(--roof)"/>
-<path d="M126 118 L180 100 L234 118Z" fill="var(--roof)"/>
-<circle cx="180" cy="100" r="7" fill="var(--paper)"/>
-<path d="M180 96 V100 H183" fill="none" stroke-linecap="round"/>
-<rect x="174" y="132" width="12" height="20" fill="var(--hill3)"/>
-<rect x="140" y="128" width="9" height="10" fill="var(--sky1)"/><rect x="211" y="128" width="9" height="10" fill="var(--sky1)"/>
-<path d="M180 66 V52"/><path d="M180 52 L194 56 L180 60Z" fill="var(--yellow)"/>
-<rect x="49" y="146" width="6" height="12" fill="var(--hill3)"/><rect x="289" y="146" width="6" height="12" fill="var(--hill3)"/>
-<circle cx="52" cy="132" r="18" fill="var(--blossom)"/><circle cx="82" cy="142" r="12" fill="var(--good)"/>
-<circle cx="292" cy="132" r="19" fill="var(--blossom)"/><circle cx="326" cy="142" r="12" fill="var(--good)"/>
-</g>
-<g stroke="var(--edge)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"><circle cx="244" cy="157" r="6.5" fill="var(--paper)"/><circle cx="264" cy="157" r="6.5" fill="var(--paper)"/><path d="M244 157 L251 146 L261 146 L264 157 M251 146 L255 157 L244 157 M249 143 H254 M261 146 L259 141 H263" stroke="var(--roof)"/></g>
-<g stroke="var(--edge)" stroke-width="2" stroke-linecap="round" fill="none"><path d="M236 40 q5 -6 10 0 q5 -6 10 0"/><path d="M96 58 q4 -5 8 0 q4 -5 8 0"/></g>
-<g fill="var(--blossom)" stroke="var(--edge)" stroke-width="1"><ellipse class="petal" cx="70" cy="40" rx="4" ry="2.4"/><ellipse class="petal" cx="150" cy="30" rx="3.6" ry="2.2"/><ellipse class="petal" cx="300" cy="60" rx="4" ry="2.4"/><ellipse class="petal" cx="340" cy="34" rx="3.4" ry="2"/><ellipse class="petal" cx="230" cy="24" rx="3.6" ry="2.2"/></g>
+ return `<div class="card hero"><span class="stamp" aria-hidden="true">115 學年<br>新生報到</span><p class="eyebrow">Beneath Mount Zhinan</p><h1>指南山腳下</h1><p>${SCHOOL}四年人生模擬器。每學期分配時間、面對突發事件，畢業時決定你的人生方向。</p>
+ <p class="small">相同 Seed ＋ 相同選擇 ＝ 相同人生</p><svg class="hero-art" viewBox="0 0 360 190" preserveAspectRatio="xMidYMax slice" role="img" aria-label="指南山腳下的校園：遠山與纜車、紅磚鐘塔校舍、拱廊、旗桿與操場跑道">
+<circle cx="302" cy="36" r="16" fill="var(--sun)"/>
+<path class="cloud" fill="var(--cloud)" d="M24 42 a9 9 0 0 1 16 -6 a11 11 0 0 1 21 3 a7 7 0 0 1 2 14 h-38 a7.5 7.5 0 0 1 -1 -11Z"/>
+<path class="cloud b" fill="var(--cloud)" d="M226 66 a7 7 0 0 1 12 -4 a8 8 0 0 1 15 2 a5.5 5.5 0 0 1 1 11 h-27 a5.5 5.5 0 0 1 -1 -9Z"/>
+<path d="M0 132 L52 86 L92 110 L150 52 L214 112 L262 80 L318 118 L360 96 V190 H0Z" fill="var(--hill1)"/>
+<path d="M0 150 L70 110 L128 138 L196 94 L270 140 L360 106 V190 H0Z" fill="var(--hill2)"/>
+<path d="M40 128 L150 54" stroke="var(--roof)" stroke-width="1.2" fill="none"/>
+<rect x="144" y="46" width="12" height="9" rx="1.5" fill="var(--roof)"/>
+<g class="gondola"><path d="M0 -7 V0" stroke="var(--roof)" stroke-width="1.2"/><rect x="-8" y="0" width="16" height="11" rx="3" fill="var(--sun)" stroke="var(--roof)" stroke-width="1.2"/></g>
+<rect y="158" width="360" height="32" fill="var(--grass)"/>
+<rect x="29" y="140" width="5" height="22" fill="var(--roof)"/><circle cx="31" cy="132" r="17" fill="var(--hill3)"/>
+<rect x="325" y="142" width="5" height="20" fill="var(--roof)"/><circle cx="327" cy="134" r="16" fill="var(--hill3)"/><circle cx="66" cy="148" r="10" fill="var(--hill3)"/>
+<path d="M290 162 V106" stroke="var(--roof)" stroke-width="1.6"/><path d="M291 107 H312 L306 114 L312 121 H291Z" fill="var(--track)"/>
+<rect x="92" y="118" width="176" height="44" fill="var(--bk)"/>
+<rect x="92" y="118" width="176" height="6" fill="var(--bk2)"/>
+<path d="M86 118 H274 L266 108 H94Z" fill="var(--roof)"/>
+<rect x="92" y="133" width="176" height="2" fill="var(--trim)" opacity=".75"/>
+<g fill="var(--win)"><path d="M100 162 V146 a6 6 0 0 1 12 0 V162Z"/><path d="M118 162 V146 a6 6 0 0 1 12 0 V162Z"/><path d="M136 162 V146 a6 6 0 0 1 12 0 V162Z"/><path d="M212 162 V146 a6 6 0 0 1 12 0 V162Z"/><path d="M230 162 V146 a6 6 0 0 1 12 0 V162Z"/><path d="M248 162 V146 a6 6 0 0 1 12 0 V162Z"/></g>
+<rect x="158" y="80" width="44" height="82" fill="var(--bk)"/>
+<rect x="158" y="80" width="44" height="5" fill="var(--bk2)"/>
+<path d="M152 80 L180 54 L208 80Z" fill="var(--roof)"/>
+<circle cx="180" cy="100" r="10" fill="var(--trim)"/><path d="M180 94 V100 H184.5" fill="none" stroke="var(--roof)" stroke-width="1.6" stroke-linecap="round"/>
+<rect x="166" y="118" width="6" height="12" rx="3" fill="var(--win)"/><rect x="177" y="118" width="6" height="12" rx="3" fill="var(--win)"/><rect x="188" y="118" width="6" height="12" rx="3" fill="var(--win)"/>
+<path d="M170 162 V146 a10 10 0 0 1 20 0 V162Z" fill="var(--win)"/>
+<rect x="150" y="160" width="60" height="4" fill="var(--trim)"/>
+<path d="M-10 190 C70 164 290 164 370 190Z" fill="var(--track)"/>
+<path d="M14 190 C90 172 270 172 346 190 M44 190 C110 178 250 178 316 190" fill="none" stroke="var(--trim)" stroke-width="1.2" opacity=".85"/>
 </svg></div>
  <div class="card">
  <button class="btn primary" data-act="newForm">開始新的大學人生</button>
@@ -1541,7 +1559,7 @@ function viewResult(){if(localStorageGet(TIPS_KEY)!=='on')localStorageSet(TIPS_K
  ${(S.epilogue||[]).length?`<h3>日後談</h3>${S.epilogue.map(([h,x])=>`<p style="margin:10px 0 2px"><b>${esc(h)}</b></p><p style="margin:0">${esc(x)}</p>`).join('')}`:''}
  ${(S.reunion||[]).length?`<details style="margin-top:10px"><summary><b>番外：十年後的同學會</b></summary>${S.reunion.map(x=>`<p class="small" style="margin:6px 0">${esc(x)}</p>`).join('')}</details>`:''}
  <h3>人生年表</h3>${timelineHtml()}
- ${newAch.length?`<h3>本局新解鎖的成就</h3><p>${newAch.map(x=>`<span class="tag gold">🏅 ${esc(x)}</span>`).join(' ')}</p>`:''}
+ ${newAch.length?`<h3>本局新解鎖的成就</h3><p>${newAch.map(x=>`<span class="tag gold">${ico('medal')} ${esc(x)}</span>`).join(' ')}</p>`:''}
  ${S.cmp?cmpHtml():''}
  <h3>稱號</h3><p>${t.length?t.map(x=>`<span class="tag gold">${esc(x)}</span>`).join(' '):'<span class="muted">平凡也是一種幸福</span>'}</p>
  <h3>四年紀錄</h3><div class="small muted" style="max-height:220px;overflow:auto">${S.log.map(l=>esc(l)).join('<br>')}</div>
@@ -1557,51 +1575,50 @@ function drawCard(){
  let cv;try{cv=document.createElement('canvas');cv.width=1080;cv.height=1560;}catch(e){return null;}
  const g=cv.getContext&&cv.getContext('2d');if(!g)return null;
  const F='"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif';const c=S.career;
- g.fillStyle='#eef4ff';g.fillRect(0,0,1080,1560);g.strokeStyle='rgba(47,91,255,.08)';g.lineWidth=2;for(let i=0;i<=1080;i+=36){g.beginPath();g.moveTo(i,0);g.lineTo(i,1560);g.stroke();}for(let j=0;j<=1560;j+=36){g.beginPath();g.moveTo(0,j);g.lineTo(1080,j);g.stroke();}
- g.fillStyle='#2f5bff';g.fillRect(0,0,1080,330);g.fillStyle='#ffd23f';g.beginPath();g.arc(940,92,48,0,7);g.fill();g.strokeStyle='#16204f';g.lineWidth=5;g.stroke();
- g.fillStyle='#1f43c9';g.beginPath();g.moveTo(0,330);g.lineTo(300,200);g.lineTo(520,290);g.lineTo(760,170);g.lineTo(1080,300);g.lineTo(1080,330);g.closePath();g.fill();
- // 彩旗與櫻花瓣
- {const fc=['#ff7a59','#ffd23f','#ffb3c7','#9be8cf','#ffffff'];g.strokeStyle='#16204f';g.lineWidth=3;g.lineJoin='round';
-  for(let i=0;i<14;i++){const x=6+i*78;g.fillStyle=fc[i%5];g.beginPath();g.moveTo(x,0);g.lineTo(x+60,0);g.lineTo(x+30,38);g.closePath();g.fill();g.stroke();}
-  g.fillStyle='#ffb3c7';[[640,150,.5],[720,232,-.4],[820,186,.9],[900,250,.2],[1010,196,-.7],[580,262,.7]].forEach(([x,y,a])=>{g.save();g.translate(x,y);g.rotate(a);g.beginPath();g.ellipse(0,0,13,7,0,0,7);g.fill();g.restore();});}
- g.fillStyle='#ffd23f';g.font=`600 30px ${F}`;g.fillText('指南山腳下・'+SCHOOL+'畢業紀念',64,84);
+ g.fillStyle='#f1f3ef';g.fillRect(0,0,1080,1560);g.strokeStyle='rgba(28,36,48,.07)';g.lineWidth=2;for(let i=0;i<=1080;i+=36){g.beginPath();g.moveTo(i,0);g.lineTo(i,1560);g.stroke();}for(let j=0;j<=1560;j+=36){g.beginPath();g.moveTo(0,j);g.lineTo(1080,j);g.stroke();}
+ g.fillStyle='#23473c';g.fillRect(0,0,1080,330);g.fillStyle='#ffd84d';g.beginPath();g.arc(940,92,48,0,7);g.fill();g.strokeStyle='#1c2430';g.lineWidth=5;g.stroke();
+ g.fillStyle='#1a382f';g.beginPath();g.moveTo(0,330);g.lineTo(300,200);g.lineTo(520,290);g.lineTo(760,170);g.lineTo(1080,300);g.lineTo(1080,330);g.closePath();g.fill();
+ // 黑板的粉筆框與木頭粉筆槽
+ g.strokeStyle='rgba(242,244,234,.3)';g.lineWidth=3;g.strokeRect(24,24,1032,278);
+ g.fillStyle='#a8733a';g.fillRect(0,316,1080,16);g.fillStyle='#7c5226';g.fillRect(0,330,1080,4);
+ g.fillStyle='#ffd84d';g.font=`600 30px ${F}`;g.fillText('指南山腳下・'+SCHOOL+'畢業紀念',64,84);
  g.fillStyle='#ffffff';g.font=`800 76px ${F}`;g.fillText(S.name,64,180);
- g.font=`400 32px ${F}`;g.fillStyle='#dbe6ff';g.fillText(`${S.college}・${S.dept}`,64,234);
+ g.font=`400 32px ${F}`;g.fillStyle='#dfe5d6';g.fillText(`${S.college}・${S.dept}`,64,234);
  g.font=`400 26px ${F}`;g.fillText(`Seed ${S.seed}　天賦 ${S.talent}　GPA ${avgGpa().toFixed(2)}`,64,280);
  // 職涯
- g.fillStyle='#ffffff';rr(g,48,370,984,200,24);g.fill();g.strokeStyle='#16204f';g.lineWidth=4;g.stroke();
- const col=c.outcome===2?'#d9741a':c.outcome===1?'#2f5bff':'#e03e3e';
+ g.fillStyle='#ffffff';rr(g,48,370,984,200,24);g.fill();g.strokeStyle='#1c2430';g.lineWidth=4;g.stroke();
+ const col=c.outcome===2?'#a85a0a':c.outcome===1?'#177a52':'#b23a22';
  g.fillStyle=col;g.font=`700 30px ${F}`;g.fillText(`${c.name}・${c.outcome===2?'大成功':c.outcome===1?'成功':'失敗'}`,84,426);
- g.fillStyle='#16204f';g.font=`800 52px ${F}`;g.fillText(c.title,84,494);
- g.fillStyle='#5b6690';g.font=`400 24px ${F}`;g.fillText(`成功率 ${Math.round(c.prob*100)}%　當初推薦：${c.rec}`,84,540);
+ g.fillStyle='#1c2430';g.font=`800 52px ${F}`;g.fillText(c.title,84,494);
+ g.fillStyle='#5a6472';g.font=`400 24px ${F}`;g.fillText(`成功率 ${Math.round(c.prob*100)}%　當初推薦：${c.rec}`,84,540);
  // GPA 折線
- g.fillStyle='#ffffff';rr(g,48,600,560,360,24);g.fill();g.strokeStyle='#16204f';g.lineWidth=4;g.stroke();
- g.fillStyle='#16204f';g.font=`700 28px ${F}`;g.fillText('每學期 GPA',84,650);
- const gs=S.gpas,x0=90,x1=570,y0=700,y1=920;g.strokeStyle='#d3ddf6';g.lineWidth=2;
- [0,1,2,3,4].forEach(v=>{const y=y1-(v/4)*(y1-y0);g.beginPath();g.moveTo(x0,y);g.lineTo(x1,y);g.stroke();g.fillStyle='#5b6690';g.font=`400 20px ${F}`;g.fillText(String(v),x0-28,y+7);});
- if(gs.length){g.strokeStyle='#2f5bff';g.lineWidth=5;g.beginPath();gs.forEach((p,i)=>{const x=gs.length===1?(x0+x1)/2:x0+i*(x1-x0)/(gs.length-1),y=y1-(p.gpa/4)*(y1-y0);i?g.lineTo(x,y):g.moveTo(x,y);});g.stroke();
-  gs.forEach((p,i)=>{const x=gs.length===1?(x0+x1)/2:x0+i*(x1-x0)/(gs.length-1),y=y1-(p.gpa/4)*(y1-y0);g.fillStyle=p.label.includes('交換')?'#ff8a1f':'#2f5bff';g.beginPath();g.arc(x,y,9,0,7);g.fill();});}
+ g.fillStyle='#ffffff';rr(g,48,600,560,360,24);g.fill();g.strokeStyle='#1c2430';g.lineWidth=4;g.stroke();
+ g.fillStyle='#1c2430';g.font=`700 28px ${F}`;g.fillText('每學期 GPA',84,650);
+ const gs=S.gpas,x0=90,x1=570,y0=700,y1=920;g.strokeStyle='#d6dbd8';g.lineWidth=2;
+ [0,1,2,3,4].forEach(v=>{const y=y1-(v/4)*(y1-y0);g.beginPath();g.moveTo(x0,y);g.lineTo(x1,y);g.stroke();g.fillStyle='#5a6472';g.font=`400 20px ${F}`;g.fillText(String(v),x0-28,y+7);});
+ if(gs.length){g.strokeStyle='#c4432b';g.lineWidth=5;g.beginPath();gs.forEach((p,i)=>{const x=gs.length===1?(x0+x1)/2:x0+i*(x1-x0)/(gs.length-1),y=y1-(p.gpa/4)*(y1-y0);i?g.lineTo(x,y):g.moveTo(x,y);});g.stroke();
+  gs.forEach((p,i)=>{const x=gs.length===1?(x0+x1)/2:x0+i*(x1-x0)/(gs.length-1),y=y1-(p.gpa/4)*(y1-y0);g.fillStyle=p.label.includes('交換')?'#177a52':'#c4432b';g.beginPath();g.arc(x,y,9,0,7);g.fill();});}
  // 雷達
- g.fillStyle='#ffffff';rr(g,632,600,400,360,24);g.fill();g.strokeStyle='#16204f';g.lineWidth=4;g.stroke();
- g.fillStyle='#16204f';g.font=`700 28px ${F}`;g.fillText('能力',668,650);
- const cx=832,cy=792,R=105;g.strokeStyle='#d3ddf6';g.lineWidth=2;
+ g.fillStyle='#ffffff';rr(g,632,600,400,360,24);g.fill();g.strokeStyle='#1c2430';g.lineWidth=4;g.stroke();
+ g.fillStyle='#1c2430';g.font=`700 28px ${F}`;g.fillText('能力',668,650);
+ const cx=832,cy=792,R=105;g.strokeStyle='#d6dbd8';g.lineWidth=2;
  [0.33,0.66,1].forEach(f=>{g.beginPath();STATS.forEach((k,i)=>{const a=-Math.PI/2+i*Math.PI/3;const x=cx+Math.cos(a)*R*f,y=cy+Math.sin(a)*R*f;i?g.lineTo(x,y):g.moveTo(x,y);});g.closePath();g.stroke();});
- g.fillStyle='rgba(47,91,255,.28)';g.strokeStyle='#2f5bff';g.lineWidth=4;g.beginPath();
+ g.fillStyle='rgba(196,67,43,.22)';g.strokeStyle='#c4432b';g.lineWidth=4;g.beginPath();
  STATS.forEach((k,i)=>{const a=-Math.PI/2+i*Math.PI/3,f=S.st[k]/100;const x=cx+Math.cos(a)*R*f,y=cy+Math.sin(a)*R*f;i?g.lineTo(x,y):g.moveTo(x,y);});g.closePath();g.fill();g.stroke();
- g.fillStyle='#16204f';g.font=`400 22px ${F}`;g.textAlign='center';
+ g.fillStyle='#1c2430';g.font=`400 22px ${F}`;g.textAlign='center';
  STATS.forEach((k,i)=>{const a=-Math.PI/2+i*Math.PI/3;g.fillText(`${k} ${Math.floor(S.st[k])}`,cx+Math.cos(a)*(R+34),cy+Math.sin(a)*(R+34)+8);});g.textAlign='left';
  // 人生年表
- g.fillStyle='#ffffff';rr(g,48,990,984,190,24);g.fill();g.strokeStyle='#16204f';g.lineWidth=4;g.stroke();g.fillStyle='#16204f';g.font=`700 28px ${F}`;g.fillText('人生年表',84,1040);
- {const L=msList().slice(-6);const lx0=110,lx1=1000,ly=1090;g.strokeStyle='#b9c5ea';g.lineWidth=3;g.beginPath();g.moveTo(lx0-20,ly);g.lineTo(lx1,ly);g.stroke();
-  L.forEach((m,i)=>{const x=L.length===1?(lx0+lx1)/2:lx0+i*(lx1-lx0-60)/(L.length-1);g.fillStyle='#2f5bff';g.beginPath();g.arc(x,ly,10,0,7);g.fill();
-   g.fillStyle='#5b6690';g.font=`400 18px ${F}`;g.fillText(m.l.replace('學期',''),x-14,ly+36);g.fillStyle='#16204f';g.font=`600 20px ${F}`;g.font=`600 19px ${F}`;g.fillText(m.t.length>7?m.t.slice(0,7)+'…':m.t,x-14,ly+64);});
-  if(!L.length){g.fillStyle='#5b6690';g.font=`400 22px ${F}`;g.fillText('平凡而踏實的四年',84,ly+10);}}
+ g.fillStyle='#ffffff';rr(g,48,990,984,190,24);g.fill();g.strokeStyle='#1c2430';g.lineWidth=4;g.stroke();g.fillStyle='#1c2430';g.font=`700 28px ${F}`;g.fillText('人生年表',84,1040);
+ {const L=msList().slice(-6);const lx0=110,lx1=1000,ly=1090;g.strokeStyle='#aeb7ba';g.lineWidth=3;g.beginPath();g.moveTo(lx0-20,ly);g.lineTo(lx1,ly);g.stroke();
+  L.forEach((m,i)=>{const x=L.length===1?(lx0+lx1)/2:lx0+i*(lx1-lx0-60)/(L.length-1);g.fillStyle='#c4432b';g.beginPath();g.arc(x,ly,10,0,7);g.fill();
+   g.fillStyle='#5a6472';g.font=`400 18px ${F}`;g.fillText(m.l.replace('學期',''),x-14,ly+36);g.fillStyle='#1c2430';g.font=`600 20px ${F}`;g.font=`600 19px ${F}`;g.fillText(m.t.length>7?m.t.slice(0,7)+'…':m.t,x-14,ly+64);});
+  if(!L.length){g.fillStyle='#5a6472';g.font=`400 22px ${F}`;g.fillText('平凡而踏實的四年',84,ly+10);}}
  // 稱號與總結
- g.fillStyle='#ffffff';rr(g,48,1205,984,290,24);g.fill();g.strokeStyle='#16204f';g.lineWidth=4;g.stroke();
+ g.fillStyle='#ffffff';rr(g,48,1205,984,290,24);g.fill();g.strokeStyle='#1c2430';g.lineWidth=4;g.stroke();
  const t=(S.sub.titlesCache||computeTitles()).slice(0,8);let tx=84,ty=1261;g.font=`600 24px ${F}`;
- t.forEach(s=>{const w=g.measureText(s).width+32;if(tx+w>1000){tx=84;ty+=52;}g.fillStyle='#fff2a6';rr(g,tx,ty-30,w,42,21);g.fill();g.fillStyle='#7a5600';g.fillText(s,tx+16,ty);tx+=w+12;});
- g.fillStyle='#16204f';g.font=`400 28px ${F}`;wrapText(g,summary(),84,ty+64,912,42);
- g.fillStyle='#5b6690';g.font=`400 20px ${F}`;g.fillText('虛構作品，與任何真實學校無關',64,1535);
+ t.forEach(s=>{const w=g.measureText(s).width+32;if(tx+w>1000){tx=84;ty+=52;}g.fillStyle='#fff3b0';rr(g,tx,ty-30,w,42,21);g.fill();g.fillStyle='#6b4e00';g.fillText(s,tx+16,ty);tx+=w+12;});
+ g.fillStyle='#1c2430';g.font=`400 28px ${F}`;wrapText(g,summary(),84,ty+64,912,42);
+ g.fillStyle='#5a6472';g.font=`400 20px ${F}`;g.fillText('虛構作品，與任何真實學校無關',64,1535);
  return cv;}
 function rr(g,x,y,w,h,r){g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath();}
 let CARD_URL=null;
