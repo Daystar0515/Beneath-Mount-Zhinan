@@ -1353,22 +1353,15 @@ function openReview(){const fr=friendsAt(0);const st=S.story||{};
  </table>
  <h3>最近的紀錄</h3><div class="small muted" style="max-height:200px;overflow:auto">${S.log.slice(-15).reverse().map(l=>esc(l)).join('<br>')||'還沒有紀錄'}</div>
  <button class="btn ghost" data-act="closeMenu">關閉</button></div></div>`;}
-const VERSION='2.1';
-const VERSION_NOTES=['Version 2.1 新增一百多個事件：每個學院各多三個、二十個科系有自己的專屬事件，大一到大四各有不同的煩惱，寒暑假與海外交換的事件也變多了',
- '家境開始有故事：清寒有就學貸款與獎學金，富裕有家人的期待；新增翹課、二一預警、房東、低潮與校園公共事務等生活事件',
+/* 版本公告：VERSION_NOTES 只放「目前這個版本」的更新內容。
+   之後每次改版：把 VERSION 改成新版號，並把 VERSION_NOTES 整個換成那一版的更新，不保留舊版的條目。 */
+const VERSION='2.1.0';
+const VERSION_NOTES=['新增一百多個事件：每個學院各多三個、二十多個科系有自己的專屬事件，大一到大四各有不同的煩惱，寒暑假與海外交換的事件也變多了',
+ '家境開始有故事：清寒有就學貸款與獎助學金，富裕有家人的期待；新增翹課、學業預警、房東、低潮與校園公共事務等生活事件',
  '大二會抽到直屬學弟妹，之後有家聚和傳承；摯友也有自己的三段故事',
- '東南亞語文學系越文組：大一暑假可以參加系上的交流團，到越南河內的 ULIS-VNU 上兩週課',
+ '東南亞語文學系越文組：大一暑假可以參加系上的交流團，到越南河內的 ULIS-VNU 上兩週課，會認識越南朋友',
  '新物品腳踏車、平板；新打工餐廳外場、補習班助教；職涯多了「差一點」的結果',
- '成就牆新增圖鑑，累計看過的事件與走過的結局；首頁新增每日 Seed，成就增加到 35 個',
- '以下是 Version 2.0 的內容：自己選課：每學期從可加選的選修裡勾選，標示涼課、普通、硬課，也可以一鍵自動選；選課季會遇到額滿或加開',
- '打工有四種工作：家教、超商大夜班、咖啡廳、系辦工讀，各有收入、成長和專屬事件；大三起可以選「學期實習」',
- '社團可以當幹部、選社長，五種社團各有比賽、成果發表等事件；新增包種茶節、校慶、聖誕晚會與畢業典禮',
- '感情線更豐富：電影院、纜車夜景、過夜、溫泉旅行等新事件，還有復合、前任變朋友、兩個心動對象的抉擇與遠距離戀愛',
- '跨國戀：交換時可能遇見當地人（名字依國家隨機），在台灣也可能遇見來學中文的交換生；有專屬的約會、道別與遠距離事件，結婚後可能到對方的國家定居',
- '平衡調整：能力與心情的變化都改成整數，能力越高成長越慢，心情需要好好經營；每學期事件數量有上限，事件畫面會顯示進度',
- '支援深色模式（預設跟隨裝置，可在首頁或選單切換）；第一次玩有新手提示；選單新增「目前為止的大學生活」可隨時回顧',
- '寒暑假可以買機車、筆電、相機、吉他和健身房會員；大四可以準備推甄、國考或投履歷，可能提前錄取',
- '結算新增人生年表、十年後的同學會番外；首頁新增成就牆（30 個成就，可匯出）；分享連結可以和朋友並排比較同一個 Seed 的人生'];
+ '成就牆新增圖鑑，累計看過的事件與走過的結局；首頁新增每日 Seed；成就增加到 35 個'];
 function versionCard(){return `<div class="card small"><h3 style="margin-top:0">Version ${VERSION} 更新重點</h3><ul style="margin:0;padding-left:20px">${VERSION_NOTES.map(n=>`<li style="margin:4px 0">${esc(n)}</li>`).join('')}</ul></div>`;}
 function viewStart(){const sv=loadSave();const qs=new URLSearchParams(location.search).get('seed');const fc=urlCmp();const achN=Object.keys(achStore().u).length;
  return `<div class="card hero"><span class="stamp" aria-hidden="true">115 學年<br>新生報到</span><p class="eyebrow">${LOGO}Beneath Mount Zhinan</p><h1>指南山腳下</h1><p>${SCHOOL}四年人生模擬器。每學期分配時間、面對突發事件，畢業時決定你的人生方向。</p>
